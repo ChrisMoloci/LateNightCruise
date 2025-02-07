@@ -1,12 +1,12 @@
 package com.gearshifgroove.late_night_cruise;
 
-public class Terrain {
+public class Tile {
     private int xCoord;
     private int yCoord;
     private int xCordSpeed;
     private int yCordSpeed;
 
-    public Terrain(int xCoord, int yCoord, int xCordSpeed) {
+    public Tile(int xCoord, int yCoord, int xCordSpeed) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.xCordSpeed = xCordSpeed;

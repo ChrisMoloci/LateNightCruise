@@ -5,11 +5,13 @@ public class Tile {
     private int yCoord;
     private int xCordSpeed;
     private int yCordSpeed;
+    private String file;
 
-    public Tile(int xCoord, int yCoord, int xCordSpeed) {
+    public Tile(int xCoord, int yCoord, int xCordSpeed, String file) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.xCordSpeed = xCordSpeed;
+        this.file = file;
     }
 
     public int getxCoord() {
@@ -42,5 +44,13 @@ public class Tile {
 
     public void setyCordSpeed(int yCordSpeed) {
         this.yCordSpeed = yCordSpeed;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public void setFile(String file) {
+        this.file = file;
     }
 }

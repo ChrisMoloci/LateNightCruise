@@ -6,6 +6,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -14,9 +16,9 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 public class LateNightCruise extends Application {
-    private Tile terrainTile1 = new Tile(0, 0, 3);
-    private Tile terrainTile2 = new Tile(0, 1080, 3);
-    private Player car = new Player(910, 490);
+    private Tile terrainTile1 = new Tile(0, 0, 3, "track.png");
+    private Tile terrainTile2 = new Tile(0, 1080, 3, "track.png");
+    private Player car = new Player(910, 490, "car.png");
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -48,12 +50,16 @@ public class LateNightCruise extends Application {
         }
 
         gc.setFill(Color.GREEN);
-        gc.fillRect(terrainTile1.getxCoord(), terrainTile1.getyCoord(), 1920, 1100);
+        gc.drawImage(new Image(getClass().getResourceAsStream(terrainTile1.getFile())), terrainTile1.getxCoord(), terrainTile1.getyCoord());
         gc.setFill(Color.BLUE);
-        gc.fillRect(terrainTile2.getxCoord(), terrainTile2.getyCoord(), 1920, 1100);
+        gc.drawImage(new Image(getClass().getResourceAsStream(terrainTile2.getFile())), terrainTile2.getxCoord(), terrainTile2.getyCoord());
+//
+//        gc.setFill(Color.RED);
+//        gc.fillRect(car.getxCoord(), car.getyCoord(), 100, 100);
 
-        gc.setFill(Color.RED);
-        gc.fillRect(car.getxCoord(), car.getyCoord(), 100, 100);
+//        gc.drawImage(new Image(getClass().getResourceAsStream("car.png")), 100, 100, 100, 100);
+        gc.drawImage(new Image(getClass().getResourceAsStream(car.getFile())), car.getxCoord(), car.getyCoord());
+
     }
 
     public static void main(String[] args) {

@@ -4,8 +4,8 @@ public class Player extends Tile {
     private int gasLevel;
     private int coinCount;
 
-    public Player(int x, int y) {
-        super(x, y, 0);
+    public Player(int x, int y, String file) {
+        super(x, y, 0, file);
     }
 
     public int getGasLevel() {

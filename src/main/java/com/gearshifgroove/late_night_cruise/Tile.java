@@ -1,17 +1,20 @@
 package com.gearshifgroove.late_night_cruise;
 
+import javafx.scene.image.Image;
+
 public class Tile {
     private int xCoord;
     private int yCoord;
     private int xCordSpeed;
     private int yCordSpeed;
-    private String file;
+    private Image image;
 
-    public Tile(int xCoord, int yCoord, int xCordSpeed, String file) {
+    public Tile(int xCoord, int yCoord, int xCordSpeed, int yCordSpeed, Image image) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.xCordSpeed = xCordSpeed;
-        this.file = file;
+        this.yCordSpeed = yCordSpeed;
+        this.image = image;
     }
 
     public int getxCoord() {
@@ -46,11 +49,11 @@ public class Tile {
         this.yCordSpeed = yCordSpeed;
     }
 
-    public String getFile() {
-        return file;
+    public Image getImage() {
+        return image;
     }
 
-    public void setFile(String file) {
-        this.file = file;
+    public void setImage(Image file) {
+        this.image = image;
     }
 }

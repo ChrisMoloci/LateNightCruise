@@ -16,9 +16,11 @@ import javafx.util.Duration;
 import java.io.IOException;
 
 public class LateNightCruise extends Application {
-    private Tile terrainTile1 = new Tile(0, 0, 3, "track.png");
-    private Tile terrainTile2 = new Tile(0, 1080, 3, "track.png");
-    private Player car = new Player(910, 490, "car.png");
+    private Image terrainImage = new Image(getClass().getResourceAsStream("track.png"));
+    private Image carImage = new Image(getClass().getResourceAsStream("car.png"));
+    private Tile terrainTile1 = new Tile(0, 0, 0, 3, terrainImage);
+    private Tile terrainTile2 = new Tile(0, 1080, 0, 3, terrainImage);
+    private Player car = new Player(910, 490, carImage);
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -39,8 +41,8 @@ public class LateNightCruise extends Application {
     public void update(GraphicsContext gc) {
         gc.clearRect(0, 0, 1920, 1080);
 
-        terrainTile1.setyCoord(terrainTile1.getyCoord() + 3);
-        terrainTile2.setyCoord(terrainTile2.getyCoord() + 3);
+        terrainTile1.setyCoord(terrainTile1.getyCoord() + terrainTile1.getyCordSpeed());
+        terrainTile2.setyCoord(terrainTile2.getyCoord() + terrainTile2.getyCordSpeed());
 
         if (terrainTile1.getyCoord() > 1080) {
             terrainTile1.setyCoord(-1080);
@@ -50,15 +52,15 @@ public class LateNightCruise extends Application {
         }
 
         gc.setFill(Color.GREEN);
-        gc.drawImage(new Image(getClass().getResourceAsStream(terrainTile1.getFile())), terrainTile1.getxCoord(), terrainTile1.getyCoord());
+        gc.drawImage(terrainTile1.getImage(), terrainTile1.getxCoord(), terrainTile1.getyCoord());
         gc.setFill(Color.BLUE);
-        gc.drawImage(new Image(getClass().getResourceAsStream(terrainTile2.getFile())), terrainTile2.getxCoord(), terrainTile2.getyCoord());
+        gc.drawImage(terrainTile2.getImage(), terrainTile2.getxCoord(), terrainTile2.getyCoord());
 //
 //        gc.setFill(Color.RED);
 //        gc.fillRect(car.getxCoord(), car.getyCoord(), 100, 100);
 
 //        gc.drawImage(new Image(getClass().getResourceAsStream("car.png")), 100, 100, 100, 100);
-        gc.drawImage(new Image(getClass().getResourceAsStream(car.getFile())), car.getxCoord(), car.getyCoord());
+        gc.drawImage(car.getImage(), car.getxCoord(), car.getyCoord());
 
     }
 

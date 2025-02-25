@@ -1,5 +1,7 @@
 package com.gearshifgroove.late_night_cruise.panes;
 
+import com.gearshifgroove.late_night_cruise.Const;
+import com.gearshifgroove.late_night_cruise.GlobalPlayer;
 import com.gearshifgroove.late_night_cruise.LateNightCruise;
 import com.gearshifgroove.late_night_cruise.scenes.GameScene;
 import com.gearshifgroove.late_night_cruise.scenes.Store.Data.Artist;
@@ -16,8 +18,7 @@ import javafx.scene.media.MediaPlayer;
 
 public class MainMenuPane extends BorderPane {
     public MainMenuPane() {
-        MediaPlayer player = new MediaPlayer(DB.getArtists().get("0001").getSong("0001").getMedia());
-        player.setCycleCount(MediaPlayer.INDEFINITE);
+        GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0001").getMedia());
 
         VBox buttons = new VBox();
 
@@ -26,18 +27,17 @@ public class MainMenuPane extends BorderPane {
 
         playButton.setOnAction(event -> {
             LateNightCruise.mainStage.setScene(new GameScene());
-            player.stop();
+            GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0002").getMedia());
         });
 
         storeButton.setOnAction(event -> {
             LateNightCruise.mainStage.setScene(new StoreScene());
-            player.stop();
+            GlobalPlayer.stopMedia();
         });
 
         buttons.getChildren().addAll(playButton, storeButton);
         buttons.setAlignment(Pos.CENTER);
 
         this.setCenter(buttons);
-        player.play();
     }
 }

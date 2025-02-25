@@ -36,10 +36,7 @@ public class GamePane extends StackPane {
         terrainTile2 = new Tile(0, 1080, 0, 3, terrainImage);
         car = new Player(883, 490, carImage);
 
-        Media media = new Media(new File(getClass().getResource("/com/gearshifgroove/late_night_cruise/Songs/0002.wav").toExternalForm()).toString());
-        MediaPlayer player = new MediaPlayer(media);
-        player.setCycleCount(MediaPlayer.INDEFINITE);
-        player.play();
+
 
         // Debug why button must be present for keyboard input to work
         Button button = new Button("Start");

@@ -25,4 +25,24 @@ public class Player extends Tile {
     public void setCoinCount(int coinCount) {
         this.coinCount = coinCount;
     }
+
+    // Moves player to the left unless they reach the maximum left position
+    public void moveLeft() {
+        if (this.getxCoord() > 795) {
+            this.setxCoord(this.getxCoord() - 88);
+        } else {
+            System.out.println("Can't move left");
+        }
+        System.out.println(this.getxCoord());
+    }
+
+    // Moves player to the right unless they reach the maximum right position
+    public void moveRight() {
+        if (this.getxCoord() < 1059) {
+            this.setxCoord(this.getxCoord() + 88);
+        } else {
+            System.out.println("Can't move right");
+        }
+        System.out.println(this.getxCoord());
+    }
 }

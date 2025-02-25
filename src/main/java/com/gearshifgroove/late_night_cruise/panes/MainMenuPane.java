@@ -19,6 +19,11 @@ import javafx.scene.media.MediaPlayer;
 public class MainMenuPane extends BorderPane {
     public MainMenuPane() {
         GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0001").getMedia());
+//        for (Artist artist : DB.getArtists().values()) {
+//            for (Song song : artist.getSongs()) {
+//                System.out.println(song.getId());
+//            }
+//        }
 
         VBox buttons = new VBox();
 

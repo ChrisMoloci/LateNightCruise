@@ -11,6 +11,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 public class StorePane extends BorderPane {
+    public static Pane displayPane = new Pane();
     public StorePane() {
         // Side menu UI
         VBox sideMenu = new VBox();
@@ -35,7 +36,7 @@ public class StorePane extends BorderPane {
         sideMenu.getChildren().addAll(sizedBox, search, home, genres, artists);
 
         // Main Content
-        Pane displayPane = new Pane(new Home());
+        displayPane = new Pane(new Home());
 
         home.setOnAction(e -> {
             displayPane.getChildren().clear();

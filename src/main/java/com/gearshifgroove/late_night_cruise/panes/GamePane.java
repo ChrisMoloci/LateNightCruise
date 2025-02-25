@@ -13,7 +13,11 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+
+import java.io.File;
 
 public class GamePane extends StackPane {
     private Image terrainImage;
@@ -31,6 +35,11 @@ public class GamePane extends StackPane {
         terrainTile1 = new Tile(0, 0, 0, 3, terrainImage);
         terrainTile2 = new Tile(0, 1080, 0, 3, terrainImage);
         car = new Player(883, 490, carImage);
+
+        Media media = new Media(new File(getClass().getResource("/com/gearshifgroove/late_night_cruise/Songs/0002.wav").toExternalForm()).toString());
+        MediaPlayer player = new MediaPlayer(media);
+        player.setCycleCount(MediaPlayer.INDEFINITE);
+        player.play();
 
         // Debug why button must be present for keyboard input to work
         Button button = new Button("Start");

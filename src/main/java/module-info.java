@@ -3,6 +3,7 @@ module com.gearshifgroove.late_night_cruise {
     requires javafx.fxml;
     requires jdk.compiler;
     requires java.desktop;
+    requires javafx.media;
 
 
     opens com.gearshifgroove.late_night_cruise to javafx.fxml;

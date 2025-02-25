@@ -15,10 +15,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+//import javafx.scene.media.Media;
 
+import java.io.File;
 import java.io.IOException;
 
 public class LateNightCruise extends Application {
@@ -26,6 +30,10 @@ public class LateNightCruise extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+//        Media media = new Media(new File("/com/gearshifgroove/late_night_cruise/song.wav").toURI().toURL().toString());
+//        MediaPlayer mediaPlayer = new MediaPlayer(media);
+//        mediaPlayer.play();
+
         mainStage = stage;
         mainStage.setTitle("Late Night Cruise");
         mainStage.setScene(new MainMenuScene());

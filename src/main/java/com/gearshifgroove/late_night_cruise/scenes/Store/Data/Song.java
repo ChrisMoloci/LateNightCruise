@@ -12,10 +12,10 @@ public class Song {
 
     public Song(String file, String genre, String songName) {
         this.id = file;
-        // For windows
-        // this.media = new Media(new File(getClass().getResource("/com/gearshifgroove/late_night_cruise/Songs/"+file+".wav").toExternalForm()).toString());
         // For mac
-        this.media = new Media(new File("src/main/com/gearshifgroove/late_night_cruise/Songs/"+file+".wav").toURI().toString());
+        // this.media = new Media(new File(getClass().getResource("/com/gearshifgroove/late_night_cruise/Songs/"+file+".wav").toExternalForm()).toString());
+        // For Windows
+        this.media = new Media(new File("src/main/resources/com/gearshifgroove/late_night_cruise/Songs/"+file+".wav").toURI().toString());
         this.genre = Genres.getGenre(genre);
         this.songName = songName;
     }

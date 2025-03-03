@@ -49,7 +49,7 @@ public class GamePane extends StackPane {
         for(int i =0; i<4;i++) {
             //// Create a random Coin object and add it to the list
             int randomX = rand.nextInt(); /// Random x coordinate (4 lanes)
-            ///RAndom Y position
+            ///Random Y position
             int randomY = rand.nextInt(500);
             coins.add(new Coin(randomX, randomY, coinImage));
 

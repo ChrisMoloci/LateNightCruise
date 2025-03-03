@@ -2,6 +2,7 @@ package com.gearshifgroove.late_night_cruise;
 
 import com.gearshifgroove.late_night_cruise.scenes.GameScene;
 import com.gearshifgroove.late_night_cruise.scenes.MainMenuScene;
+import com.gearshifgroove.late_night_cruise.scenes.StoreScene;
 import com.sun.tools.javac.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

@@ -1,25 +1,15 @@
 package com.gearshifgroove.late_night_cruise;
 
-import com.gearshifgroove.late_night_cruise.scenes.GameScene;
 import com.gearshifgroove.late_night_cruise.scenes.MainMenuScene;
-import com.gearshifgroove.late_night_cruise.scenes.StoreScene;
-import com.sun.tools.javac.Main;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import com.gearshifgroove.late_night_cruise.scenes.Store.Data.Artist;
+import com.gearshifgroove.late_night_cruise.scenes.Store.Data.Song;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+//import javafx.scene.media.Media;
 
 import java.io.IOException;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 public class LateNightCruise extends Application {
     public static Stage mainStage;

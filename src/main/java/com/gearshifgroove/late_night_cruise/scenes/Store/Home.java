@@ -1,6 +1,7 @@
 package com.gearshifgroove.late_night_cruise.scenes.Store;
 
 import com.gearshifgroove.late_night_cruise.Const;
+import com.gearshifgroove.late_night_cruise.panes.StorePane;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -29,6 +30,11 @@ public class Home extends VBox {
         genres.setMinWidth(mainSectionWidth/3);
         Button topSongs = new Button("Top Songs");
         topSongs.setMinWidth(mainSectionWidth/3);
+
+        topSongs.setOnAction(e -> {
+            StorePane.displayPane.getChildren().clear();
+            StorePane.displayPane.getChildren().add(new TopSongs());
+        });
 
         quickAccessButtonsBox.getChildren().addAll(artists, genres, topSongs);
         this.getChildren().add(quickAccessButtonsBox);

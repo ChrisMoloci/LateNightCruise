@@ -1,15 +1,30 @@
 package com.gearshifgroove.late_night_cruise.panes;
 
+import com.gearshifgroove.late_night_cruise.Const;
+import com.gearshifgroove.late_night_cruise.GlobalPlayer;
 import com.gearshifgroove.late_night_cruise.LateNightCruise;
 import com.gearshifgroove.late_night_cruise.scenes.GameScene;
+import com.gearshifgroove.late_night_cruise.scenes.Store.Data.Artist;
+import com.gearshifgroove.late_night_cruise.scenes.Store.Data.DB;
+import com.gearshifgroove.late_night_cruise.scenes.Store.Data.Song;
+import com.gearshifgroove.late_night_cruise.scenes.Store.Data.Songs;
 import com.gearshifgroove.late_night_cruise.scenes.StoreScene;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class MainMenuPane extends BorderPane {
     public MainMenuPane() {
+        GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0001").getMedia());
+//        for (Artist artist : DB.getArtists().values()) {
+//            for (Song song : artist.getSongs()) {
+//                System.out.println(song.getId());
+//            }
+//        }
+
         VBox buttons = new VBox();
 
         Button playButton = new Button("Start");
@@ -17,10 +32,12 @@ public class MainMenuPane extends BorderPane {
 
         playButton.setOnAction(event -> {
             LateNightCruise.mainStage.setScene(new GameScene());
+            GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0002").getMedia());
         });
 
         storeButton.setOnAction(event -> {
             LateNightCruise.mainStage.setScene(new StoreScene());
+            GlobalPlayer.stopMedia();
         });
 
         buttons.getChildren().addAll(playButton, storeButton);

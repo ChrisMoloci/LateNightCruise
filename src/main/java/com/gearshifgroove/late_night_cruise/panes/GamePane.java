@@ -17,6 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+
+import java.io.File;
+
 public class GamePane extends StackPane {
     private Image terrainImage;
     private Image carImage;
@@ -41,11 +47,6 @@ public class GamePane extends StackPane {
         terrainTile2 = new Tile(0, 1080, 0, 3, terrainImage);
         car = new Player(883, 490, carImage);
 
-
-
-
-
-
         for(int i =0; i<4;i++) {
             //// Create a random Coin object and add it to the list
             int randomX = rand.nextInt(); /// Random x coordinate (4 lanes)
@@ -62,8 +63,6 @@ public class GamePane extends StackPane {
             fuels.add(new Fuel(randomX, randomY, fuelImage));
 
         }
-
-
 
         // Debug why button must be present for keyboard input to work
         Button button = new Button("Start");

@@ -4,13 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Playlist implements Serializable {
-    private String id;
+    private int id;
     private String name;
     private ArrayList<Song> songs;
 
-    public Playlist(String id, String name) {
+    public Playlist(int id, String name) {
         this.id = id;
         this.name = name;
+        this.songs = new ArrayList<>();
     }
 
     public void addSong(Song song) {
@@ -21,11 +22,11 @@ public class Playlist implements Serializable {
         return songs;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -2,6 +2,7 @@ package com.gearshifgroove.late_night_cruise.panes.Store;
 
 import com.gearshifgroove.late_night_cruise.GlobalPlayer;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Playlist;
+import com.gearshifgroove.late_night_cruise.panes.Store.Data.Song;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -25,6 +26,12 @@ public class PlaylistListing extends GridPane {
 
         Button selectButton = new Button("Select Playlist");
         Text playlistName = new Text(playlist.getName());
+
+        selectButton.setOnAction(e -> {
+            for (Song song : playlist.getSongs()) {
+                System.out.println(song.getSongName());
+            }
+        });
 //        Text artistName = new Text("Artist: ");
 
 //        playButton.setOnAction(e -> {

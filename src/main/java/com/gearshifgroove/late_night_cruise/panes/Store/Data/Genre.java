@@ -1,6 +1,8 @@
 package com.gearshifgroove.late_night_cruise.panes.Store.Data;
 
-public class Genre {
+import java.io.Serializable;
+
+public class Genre implements Serializable {
     private String name;
 
     public Genre(String name) {

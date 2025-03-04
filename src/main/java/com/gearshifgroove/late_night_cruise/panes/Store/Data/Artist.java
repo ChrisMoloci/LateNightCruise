@@ -1,8 +1,9 @@
 package com.gearshifgroove.late_night_cruise.panes.Store.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Artist {
+public class Artist implements Serializable {
     private String name;
     private String artistId;
     private ArrayList<Song> songs;

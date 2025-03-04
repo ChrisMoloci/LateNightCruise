@@ -3,10 +3,12 @@ package com.gearshifgroove.late_night_cruise.panes.Store.Data;
 import javafx.scene.media.Media;
 
 import java.io.File;
+import java.io.Serializable;
 
-public class Song {
+public class Song implements Serializable {
     private String id;
-    private Media media;
+//    private Media media;
+    private String media;
     private Genre genre;
     private String songName;
 
@@ -15,7 +17,8 @@ public class Song {
         // For mac
         // this.media = new Media(new File(getClass().getResource("/com/gearshifgroove/late_night_cruise/Songs/"+file+".wav").toExternalForm()).toString());
         // For Windows
-        this.media = new Media(new File("src/main/resources/com/gearshifgroove/late_night_cruise/Songs/"+file+".wav").toURI().toString());
+//        this.media = new Media(new File("src/main/resources/com/gearshifgroove/late_night_cruise/Songs/"+file+".wav").toURI().toString());
+        this.media = "src/main/resources/com/gearshifgroove/late_night_cruise/Songs/"+file+".wav";
         this.genre = Genres.getGenre(genre);
         this.songName = songName;
     }
@@ -28,11 +31,11 @@ public class Song {
         this.id = id;
     }
 
-    public Media getMedia() {
+    public String getMedia() {
         return media;
     }
 
-    public void setMedia(Media media) {
+    public void setMedia(String media) {
         this.media = media;
     }
 

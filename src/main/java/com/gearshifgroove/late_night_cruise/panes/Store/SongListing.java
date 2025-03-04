@@ -1,9 +1,8 @@
-package com.gearshifgroove.late_night_cruise.scenes.Store;
+package com.gearshifgroove.late_night_cruise.panes.Store;
 
 import com.gearshifgroove.late_night_cruise.Const;
 import com.gearshifgroove.late_night_cruise.GlobalPlayer;
-import com.gearshifgroove.late_night_cruise.scenes.Store.Data.DB;
-import com.gearshifgroove.late_night_cruise.scenes.Store.Data.Song;
+import com.gearshifgroove.late_night_cruise.panes.Store.Data.Song;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -33,6 +32,6 @@ public class SongListing extends GridPane {
         this.add(songName, 1, 0);
         this.add(artistName, 1, 1);
         this.setBackground(new Background(new BackgroundFill(Color.rgb(240, 240, 240), null, null)));
-        this.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH/4);
+//        this.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH/4);
     }
 }

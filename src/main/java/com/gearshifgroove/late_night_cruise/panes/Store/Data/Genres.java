@@ -1,8 +1,7 @@
-package com.gearshifgroove.late_night_cruise.scenes.Store.Data;
+package com.gearshifgroove.late_night_cruise.panes.Store.Data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Genres {
     private static ArrayList<Genre> genres;

@@ -1,9 +1,11 @@
 package com.gearshifgroove.late_night_cruise.panes;
 
 import com.gearshifgroove.late_night_cruise.Const;
-import com.gearshifgroove.late_night_cruise.scenes.Store.Artists;
-import com.gearshifgroove.late_night_cruise.scenes.Store.Genres;
-import com.gearshifgroove.late_night_cruise.scenes.Store.Home;
+import com.gearshifgroove.late_night_cruise.CustomUIElements.PaddingBox;
+import com.gearshifgroove.late_night_cruise.panes.Store.Artists;
+import com.gearshifgroove.late_night_cruise.panes.Store.Genres;
+import com.gearshifgroove.late_night_cruise.panes.Store.Home;
+import com.gearshifgroove.late_night_cruise.panes.Store.Playlists;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -19,24 +21,31 @@ public class StorePane extends BorderPane {
         sideMenu.setMaxWidth(Const.WINDOW_WIDTH/4);
         sideMenu.setSpacing(10);
         sideMenu.setBackground(new Background(new BackgroundFill(Color.rgb(250, 250, 250), CornerRadii.EMPTY, Insets.EMPTY)));
-//        sideMenu.getChildren().addAll(new Text("Test"));
-        VBox sizedBox = new VBox();
-        sizedBox.setMinHeight(50);
+
         TextField search = new TextField("Search...");
-//        search.setPrefWidth(sideMenu.getMinWidth()-sideMenu.getMinWidth()/2);
+
         Button home = new Button("Home");
         home.setMinWidth(sideMenu.getMinWidth());
         home.setMaxWidth(sideMenu.getMinWidth());
+
         Button genres = new Button("Browse Genres");
         genres.setMinWidth(sideMenu.getMinWidth());
         genres.setMaxWidth(sideMenu.getMinWidth());
+
         Button artists = new Button("Browse Artists");
         artists.setMinWidth(sideMenu.getMinWidth());
         artists.setMaxWidth(sideMenu.getMinWidth());
-        sideMenu.getChildren().addAll(sizedBox, search, home, genres, artists);
+
+        Button playlistsButton = new Button("Playlists");
+        playlistsButton.setMinWidth(sideMenu.getMinWidth());
+        playlistsButton.setMaxWidth(sideMenu.getMinWidth());
+
+        sideMenu.getChildren().addAll(new PaddingBox(50), search, home, genres, artists, new PaddingBox(30), playlistsButton);
 
         // Main Content
-        displayPane = new Pane(new Home());
+//        displayPane = new Pane(new Home());
+        displayPane = new Pane(new Playlists());
+
 
         home.setOnAction(e -> {
             displayPane.getChildren().clear();
@@ -51,6 +60,11 @@ public class StorePane extends BorderPane {
         artists.setOnAction(e -> {
             displayPane.getChildren().clear();
             displayPane.getChildren().add(new Artists());
+        });
+
+        playlistsButton.setOnAction(e -> {
+            displayPane.getChildren().clear();
+           displayPane.getChildren().add(new Playlists());
         });
 
         this.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255), CornerRadii.EMPTY, Insets.EMPTY)));

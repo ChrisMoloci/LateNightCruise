@@ -1,8 +1,7 @@
-package com.gearshifgroove.late_night_cruise.scenes.Store;
+package com.gearshifgroove.late_night_cruise.panes.Store;
 
 import com.gearshifgroove.late_night_cruise.Const;
 import com.gearshifgroove.late_night_cruise.panes.StorePane;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;

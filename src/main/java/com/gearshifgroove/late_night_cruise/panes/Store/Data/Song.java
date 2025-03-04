@@ -1,4 +1,4 @@
-package com.gearshifgroove.late_night_cruise.scenes.Store.Data;
+package com.gearshifgroove.late_night_cruise.panes.Store.Data;
 
 import javafx.scene.media.Media;
 

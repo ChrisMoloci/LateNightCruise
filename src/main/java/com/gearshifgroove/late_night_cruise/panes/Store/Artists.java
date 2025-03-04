@@ -1,4 +1,4 @@
-package com.gearshifgroove.late_night_cruise.scenes.Store;
+package com.gearshifgroove.late_night_cruise.panes.Store;
 
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;

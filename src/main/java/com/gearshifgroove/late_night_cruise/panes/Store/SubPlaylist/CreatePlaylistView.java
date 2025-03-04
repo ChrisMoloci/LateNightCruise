@@ -48,6 +48,7 @@ public class CreatePlaylistView extends BorderPane {
         form.setAlignment(Pos.CENTER);
 //        form.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 
+        // Create a new playlist
         create.setOnAction(e -> {
            try {
                ArrayList<Playlist> playlists = UserLib.getPlaylists();
@@ -76,6 +77,7 @@ public class CreatePlaylistView extends BorderPane {
             returnToPlaylists();
         });
 
+        // REMOVE IN PROD - FOR DEBUGGING - CREATES A PLAYLIST WITH EVERY SONG AVAILABLE
         createTemplatedPlaylist.setOnAction(e -> {
             try {
                 ArrayList<Playlist> playlists = UserLib.getPlaylists();
@@ -113,6 +115,7 @@ public class CreatePlaylistView extends BorderPane {
             }
         });
     }
+
     public static void returnToPlaylists() {
         StorePane.displayPane.getChildren().clear();
         StorePane.displayPane.getChildren().add(new Playlists());

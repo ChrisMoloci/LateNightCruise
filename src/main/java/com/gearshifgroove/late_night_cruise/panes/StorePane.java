@@ -6,6 +6,7 @@ import com.gearshifgroove.late_night_cruise.panes.Store.Artists;
 import com.gearshifgroove.late_night_cruise.panes.Store.Genres;
 import com.gearshifgroove.late_night_cruise.panes.Store.Home;
 import com.gearshifgroove.late_night_cruise.panes.Store.Playlists;
+import com.gearshifgroove.late_night_cruise.panes.Store.SubPlaylist.AddToPlaylistView;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -40,11 +41,15 @@ public class StorePane extends BorderPane {
         playlistsButton.setMinWidth(sideMenu.getMinWidth());
         playlistsButton.setMaxWidth(sideMenu.getMinWidth());
 
-        sideMenu.getChildren().addAll(new PaddingBox(50), search, home, genres, artists, new PaddingBox(30), playlistsButton);
+        Button debug = new Button("Debug");
+        debug.setMinWidth(sideMenu.getMinWidth());
+        debug.setMaxWidth(sideMenu.getMinWidth());
+
+        sideMenu.getChildren().addAll(new PaddingBox(50), search, home, genres, artists, new PaddingBox(30), playlistsButton, debug);
 
         // Main Content
-//        displayPane = new Pane(new Home());
-        displayPane = new Pane(new Playlists());
+        displayPane = new Pane(new Home());
+//        displayPane = new Pane(new Playlists());
 
 
         home.setOnAction(e -> {
@@ -65,6 +70,11 @@ public class StorePane extends BorderPane {
         playlistsButton.setOnAction(e -> {
             displayPane.getChildren().clear();
            displayPane.getChildren().add(new Playlists());
+        });
+
+        debug.setOnAction(e -> {
+            displayPane.getChildren().clear();
+            displayPane.getChildren().add(new AddToPlaylistView());
         });
 
         this.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255), CornerRadii.EMPTY, Insets.EMPTY)));

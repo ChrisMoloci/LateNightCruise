@@ -17,41 +17,6 @@ import java.io.*;
 
 public class Playlists extends ListView {
     public Playlists() {
-//        Playlist myPlaylist = new Playlist("0001", "myPlaylist");
-//        Playlist anotherPlaylist = new Playlist("0001", "Playlist");
-//////        myPlaylist.addSong(DB.getArtists().get("0001").getSongs().get(0));
-////
-////        this.getItems().add(new PlaylistListing(myPlaylist));
-////
-//        try {
-//            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("playlist.dat"));
-//            output.writeObject(myPlaylist);
-//            output.writeObject(anotherPlaylist);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            ObjectInputStream input = new ObjectInputStream((new FileInputStream("playlist.dat")));
-//            {
-////                Playlist playlist = (Playlist) input.readObject();
-////                Playlist playlist2 = (Playlist) input.readObject();
-////                this.getItems().add(new PlaylistListing(playlist));
-////                this.getItems().add(new PlaylistListing(playlist2));
-//                while (true) {
-//                    try {
-//                        Playlist playlist = (Playlist) input.readObject();
-//                        this.getItems().add(new PlaylistListing(playlist));
-//                    } catch (Exception e) {
-////                        e.printStackTrace();
-//                        System.out.println("End of playlist dat file");
-//                        break;
-//                    }
-//                }
-//            }
-////            System.out.println();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         Button createPlaylist = new Button("Create Playlist");
         createPlaylist.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
         this.getItems().add(createPlaylist);

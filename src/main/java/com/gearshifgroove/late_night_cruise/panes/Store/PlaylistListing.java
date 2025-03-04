@@ -12,7 +12,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class PlaylistListing extends GridPane {
+    private static Playlist playlist;
     public PlaylistListing(Playlist playlist) {
+        this.playlist = playlist;
+        this.setOnMouseClicked(event -> {
+            System.out.println("Playlist: " + playlist.getName());
+        });
 //        this.getChildren().add(new Text(playlist.getName()));
 //        this.add(new Button("Play Now"), 0, 0);
 //        this.add(new Text("Playlist"), 1, 1);
@@ -43,5 +48,9 @@ public class PlaylistListing extends GridPane {
 //        this.add(artistName, 1, 1);
         this.setBackground(new Background(new BackgroundFill(Color.rgb(240, 240, 240), null, null)));
 //        this.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH/4);
+    }
+
+    public Playlist getPlaylist() {
+        return playlist;
     }
 }

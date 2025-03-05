@@ -33,6 +33,7 @@ public class PlaylistListing extends GridPane {
         Text playlistName = new Text(playlist.getName());
 
         selectButton.setOnAction(e -> {
+            System.out.println("Songs in playlist: ");
             for (Song song : playlist.getSongs()) {
                 System.out.println(song.getSongName());
             }

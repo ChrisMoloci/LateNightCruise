@@ -16,6 +16,7 @@ public class Playlist implements Serializable {
 
     public void addSong(Song song) {
         this.songs.add(song);
+        System.out.println("Song added: " + song.getSongName());
     }
 
     public ArrayList<Song> getSongs() {

@@ -72,10 +72,10 @@ public class StorePane extends BorderPane {
            displayPane.getChildren().add(new Playlists());
         });
 
-        debug.setOnAction(e -> {
-            displayPane.getChildren().clear();
-            displayPane.getChildren().add(new AddToPlaylistView());
-        });
+//        debug.setOnAction(e -> {
+//            displayPane.getChildren().clear();
+//            displayPane.getChildren().add(new AddToPlaylistView());
+//        });
 
         this.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255), CornerRadii.EMPTY, Insets.EMPTY)));
         this.setLeft(sideMenu);

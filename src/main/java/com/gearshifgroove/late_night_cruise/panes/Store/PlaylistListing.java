@@ -15,9 +15,9 @@ public class PlaylistListing extends GridPane {
     private static Playlist playlist;
     public PlaylistListing(Playlist playlist) {
         this.playlist = playlist;
-        this.setOnMouseClicked(event -> {
-            System.out.println("Playlist: " + playlist.getName());
-        });
+//        this.setOnMouseClicked(event -> {
+//            System.out.println("Playlist: " + playlist.getName());
+//        });
 //        this.getChildren().add(new Text(playlist.getName()));
 //        this.add(new Button("Play Now"), 0, 0);
 //        this.add(new Text("Playlist"), 1, 1);
@@ -52,5 +52,8 @@ public class PlaylistListing extends GridPane {
 
     public Playlist getPlaylist() {
         return playlist;
+    }
+    public void test() {
+        System.out.println("Hello World");
     }
 }

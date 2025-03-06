@@ -143,6 +143,20 @@ public class GamePane extends StackPane {
 
 
     public void update(GraphicsContext gc) {
+        int key = rand.nextInt(100);
+
+        if (key == 0) {
+            key = rand.nextInt(0, 2);
+            if (key == 0) {
+                System.out.println("Coin");
+            } else if (key == 1) {
+                System.out.println("Fuel");
+            } else {
+                System.out.println("Unknown generator");
+            }
+
+        }
+
         gc.clearRect(0, 0, Const.WINDOW_WIDTH, Const.WINDOW_HEIGHT);
 
         terrainTile1.setyCoord(terrainTile1.getyCoord() + terrainTile1.getyCordSpeed());

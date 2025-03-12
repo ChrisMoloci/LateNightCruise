@@ -21,7 +21,8 @@ public class MainMenuPane extends BorderPane {
 
         playButton.setOnAction(event -> {
             LateNightCruise.mainStage.setScene(new GameScene());
-            GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0002").getMedia());
+//            GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0002").getMedia());
+            GlobalPlayer.playPlaylist(GlobalPlayer.selectedPlaylist, 0);
         });
 
         storeButton.setOnAction(event -> {

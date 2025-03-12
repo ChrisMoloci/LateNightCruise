@@ -11,6 +11,8 @@ public class DB {
         try {
             artists.put("0000", new Artist("Unknown", "0000"));
             artists.get("0000").addSong(new Song("0004", "Unknown Genre", "Calm Corporate"));
+            artists.get("0000").addSong(new Song("0000", "Unknown Genre", "Coin"));
+            artists.get("0000").addSong(new Song("debug1", "Unknown Genre", "Bell"));
 
             artists.put("0001", new Artist("Christian Moloci", "0001"));
             artists.get("0001").addSong(new Song("0001", "Lofi", "Intro Song"));

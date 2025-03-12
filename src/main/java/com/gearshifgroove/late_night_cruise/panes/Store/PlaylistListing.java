@@ -37,6 +37,8 @@ public class PlaylistListing extends GridPane {
             for (Song song : playlist.getSongs()) {
                 System.out.println(song.getSongName());
             }
+//            GlobalPlayer.playPlaylist(playlist.getSongs(), 0);
+            GlobalPlayer.selectedPlaylist = playlist.getSongs();
         });
 //        Text artistName = new Text("Artist: ");
 

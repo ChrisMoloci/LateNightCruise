@@ -2,11 +2,14 @@ package com.gearshifgroove.late_night_cruise.panes;
 
 import com.gearshifgroove.late_night_cruise.Const;
 import com.gearshifgroove.late_night_cruise.CustomUIElements.PaddingBox;
+import com.gearshifgroove.late_night_cruise.LateNightCruise;
 import com.gearshifgroove.late_night_cruise.panes.Store.Artists;
 import com.gearshifgroove.late_night_cruise.panes.Store.Genres;
 import com.gearshifgroove.late_night_cruise.panes.Store.Home;
 import com.gearshifgroove.late_night_cruise.panes.Store.Playlists;
 import com.gearshifgroove.late_night_cruise.panes.Store.SubPlaylist.AddToPlaylistView;
+import com.gearshifgroove.late_night_cruise.scenes.GameScene;
+import com.gearshifgroove.late_night_cruise.scenes.MainMenuScene;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -22,6 +25,10 @@ public class StorePane extends BorderPane {
         sideMenu.setMaxWidth(Const.WINDOW_WIDTH/4);
         sideMenu.setSpacing(10);
         sideMenu.setBackground(new Background(new BackgroundFill(Color.rgb(250, 250, 250), CornerRadii.EMPTY, Insets.EMPTY)));
+
+        Button back = new Button("Back");
+        back.setMinWidth(sideMenu.getMinWidth());
+        back.setMaxWidth(sideMenu.getMinWidth());
 
         TextField search = new TextField("Search...");
 
@@ -45,11 +52,15 @@ public class StorePane extends BorderPane {
         debug.setMinWidth(sideMenu.getMinWidth());
         debug.setMaxWidth(sideMenu.getMinWidth());
 
-        sideMenu.getChildren().addAll(new PaddingBox(50), search, home, genres, artists, new PaddingBox(30), playlistsButton, debug);
+        sideMenu.getChildren().addAll(back, new PaddingBox(40), search, home, genres, artists, new PaddingBox(30), playlistsButton, debug);
 
         // Main Content
         displayPane = new Pane(new Home());
 //        displayPane = new Pane(new Playlists());
+
+        back.setOnAction(event -> {
+           LateNightCruise.mainStage.setScene(new MainMenuScene());
+        });
 
 
         home.setOnAction(e -> {

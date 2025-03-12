@@ -2,6 +2,7 @@ package com.gearshifgroove.late_night_cruise.panes;
 
 import com.gearshifgroove.late_night_cruise.GlobalPlayer;
 import com.gearshifgroove.late_night_cruise.LateNightCruise;
+import com.gearshifgroove.late_night_cruise.ScoreSystem;
 import com.gearshifgroove.late_night_cruise.scenes.GameScene;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.DB;
 import com.gearshifgroove.late_night_cruise.scenes.StoreScene;
@@ -12,6 +13,8 @@ import javafx.scene.layout.VBox;
 
 public class MainMenuPane extends BorderPane {
     public MainMenuPane() {
+//        ScoreSystem.updateStoredScore(10);
+        System.out.println(ScoreSystem.getStoredScore());
         GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0001").getMedia());
 
         VBox buttons = new VBox();

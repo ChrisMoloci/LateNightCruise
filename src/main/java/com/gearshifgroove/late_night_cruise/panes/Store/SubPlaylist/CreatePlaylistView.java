@@ -40,7 +40,7 @@ public class CreatePlaylistView extends BorderPane {
         HBox buttons = new HBox();
         buttons.getChildren().addAll(create, cancel, createTemplatedPlaylist);
 
-        form.getChildren().addAll(name, new PaddingBox(20), buttons);
+        form.getChildren().addAll(name, new PaddingBox(20, 0), buttons);
         this.setCenter(form);
         BorderPane.setAlignment(form, Pos.CENTER);
         form.setMinHeight(200);

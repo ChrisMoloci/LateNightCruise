@@ -11,8 +11,9 @@ public class Song implements Serializable {
     private String media;
     private Genre genre;
     private String songName;
+    private String artist;
 
-    public Song(String file, String genre, String songName) {
+    public Song(String file, String genre, String songName, String artist) {
         this.id = file;
         // For mac
         // this.media = new Media(new File(getClass().getResource("/com/gearshifgroove/late_night_cruise/Songs/"+file+".wav").toExternalForm()).toString());
@@ -21,6 +22,7 @@ public class Song implements Serializable {
         this.media = "src/main/resources/com/gearshifgroove/late_night_cruise/Songs/"+file+".wav";
         this.genre = Genres.getGenre(genre);
         this.songName = songName;
+        this.artist = artist;
     }
 
     public String getId() {
@@ -53,5 +55,9 @@ public class Song implements Serializable {
 
     public void setSongName(String songName) {
         this.songName = songName;
+    }
+
+    public String getArtist() {
+        return artist;
     }
 }

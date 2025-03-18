@@ -26,10 +26,13 @@ public class Home extends VBox {
         // Quick Access Buttons (genres, artists, etc)
         Text quickAccessButtons = new Text("Find your next jam");
         HBox quickAccessButtonsBox = new HBox();
+
         Button artists = new Button("Artists");
         artists.setMinWidth(mainSectionWidth/3);
+
         Button genres = new Button("Genres");
         genres.setMinWidth(mainSectionWidth/3);
+
         Button topSongs = new Button("Top Songs");
         topSongs.setMinWidth(mainSectionWidth/3);
 
@@ -40,6 +43,8 @@ public class Home extends VBox {
 
         quickAccessButtonsBox.getChildren().addAll(artists, genres, topSongs);
         this.getChildren().add(quickAccessButtonsBox);
+
+        this.setMinHeight(Const.WINDOW_HEIGHT);
 
 
         // Browse Albums and music

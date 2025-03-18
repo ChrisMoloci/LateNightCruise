@@ -351,8 +351,6 @@ public class GamePane extends StackPane {
         coins.clear();
         fuels.clear();
 
-
-
         // Remove the "Game Over" text and buttons
       if (gameOverText != null){
           this.getChildren().remove(gameOverText);
@@ -381,6 +379,9 @@ public class GamePane extends StackPane {
         /// Replace with actual main menu scene
         LateNightCruise.mainStage.setScene(new MainMenuScene());
     }
+
+
+
     private void drawScoreBox(GraphicsContext gc){
         ///  Coin box
         gc.setFill(Color.BLACK);

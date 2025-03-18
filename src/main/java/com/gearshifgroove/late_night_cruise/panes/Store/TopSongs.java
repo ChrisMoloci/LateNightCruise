@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -42,9 +43,8 @@ public class TopSongs extends ScrollPane {
 
         this.setContent(topSongsBox);
         this.setMaxSize(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4, Const.WINDOW_HEIGHT);
-
-//        this.setMinSize(Const.WINDOW_WIDTH, Const.WINDOW_HEIGHT);
-
+        this.setMinSize(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4, Const.WINDOW_HEIGHT);
+//        this.setMaxHeight(Const.WINDOW_HEIGHT);
 //
 //        this.getItems().get(0);
 //

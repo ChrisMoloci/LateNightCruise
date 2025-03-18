@@ -4,12 +4,7 @@ import com.gearshifgroove.late_night_cruise.Const;
 import com.gearshifgroove.late_night_cruise.CustomUIElements.PaddingBox;
 import com.gearshifgroove.late_night_cruise.LateNightCruise;
 import com.gearshifgroove.late_night_cruise.ScoreSystem;
-import com.gearshifgroove.late_night_cruise.panes.Store.Artists;
-import com.gearshifgroove.late_night_cruise.panes.Store.Genres;
-import com.gearshifgroove.late_night_cruise.panes.Store.Home;
-import com.gearshifgroove.late_night_cruise.panes.Store.Playlists;
-import com.gearshifgroove.late_night_cruise.panes.Store.SubPlaylist.AddToPlaylistView;
-import com.gearshifgroove.late_night_cruise.scenes.GameScene;
+import com.gearshifgroove.late_night_cruise.panes.Store.*;
 import com.gearshifgroove.late_night_cruise.scenes.MainMenuScene;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -75,6 +70,12 @@ public class StorePane extends BorderPane {
         artists.setMinWidth(sideMenu.getMinWidth());
         artists.setMaxWidth(sideMenu.getMinWidth());
 
+        Button songs = new Button("Browse Songs");
+        songs.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), CornerRadii.EMPTY, Insets.EMPTY)));
+        songs.setTextFill(Color.WHITE);
+        songs.setMinWidth(sideMenu.getMinWidth());
+        songs.setMaxWidth(sideMenu.getMinWidth());
+
         Button playlistsButton = new Button("Playlists");
         playlistsButton.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), CornerRadii.EMPTY, Insets.EMPTY)));
         playlistsButton.setTextFill(Color.WHITE);
@@ -87,7 +88,12 @@ public class StorePane extends BorderPane {
         debug.setMinWidth(sideMenu.getMinWidth());
         debug.setMaxWidth(sideMenu.getMinWidth());
 
-        sideMenu.getChildren().addAll(menuAndCoinCount, new PaddingBox(10, 0), store, new PaddingBox(10, 0), search, new PaddingBox(10, 0), home, genres, artists, new PaddingBox(30, 0), playlistsButton, debug);
+        sideMenu.getChildren().addAll(
+                menuAndCoinCount, new PaddingBox(10, 0),
+                store, new PaddingBox(10, 0),
+                search, new PaddingBox(10, 0),
+                home, genres, artists, songs, new PaddingBox(30, 0),
+                playlistsButton, debug);
 
         // Main Content
         displayPane = new Pane(new Home());
@@ -111,6 +117,11 @@ public class StorePane extends BorderPane {
         artists.setOnAction(e -> {
             displayPane.getChildren().clear();
             displayPane.getChildren().add(new Artists());
+        });
+
+        songs.setOnAction(e -> {
+            displayPane.getChildren().clear();
+            displayPane.getChildren().add(new TopSongs());
         });
 
         playlistsButton.setOnAction(e -> {

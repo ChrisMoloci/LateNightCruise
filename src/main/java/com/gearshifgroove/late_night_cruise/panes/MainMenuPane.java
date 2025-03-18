@@ -4,7 +4,13 @@ import com.gearshifgroove.late_night_cruise.GlobalPlayer;
 import com.gearshifgroove.late_night_cruise.LateNightCruise;
 import com.gearshifgroove.late_night_cruise.ScoreSystem;
 import com.gearshifgroove.late_night_cruise.scenes.GameScene;
+import com.gearshifgroove.late_night_cruise.scenes.ItemShopScene;
+import com.gearshifgroove.late_night_cruise.scenes.Store.Data.Artist;
+import com.gearshifgroove.late_night_cruise.scenes.Store.Data.DB;
+import com.gearshifgroove.late_night_cruise.scenes.Store.Data.Song;
+import com.gearshifgroove.late_night_cruise.scenes.Store.Data.Songs;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.DB;
+
 import com.gearshifgroove.late_night_cruise.scenes.StoreScene;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -21,6 +27,7 @@ public class MainMenuPane extends BorderPane {
 
         Button playButton = new Button("Start");
         Button storeButton = new Button("Store");
+        Button itemShopButton = new Button("Item Shop");
 
         playButton.setOnAction(event -> {
             LateNightCruise.mainStage.setScene(new GameScene());
@@ -33,7 +40,12 @@ public class MainMenuPane extends BorderPane {
             GlobalPlayer.stopMedia();
         });
 
-        buttons.getChildren().addAll(playButton, storeButton);
+        itemShopButton.setOnAction(e->{
+            LateNightCruise.mainStage.setScene(new ItemShopScene());
+            GlobalPlayer.stopMedia();
+        });
+
+        buttons.getChildren().addAll(playButton, storeButton,itemShopButton);
         buttons.setAlignment(Pos.CENTER);
 
         this.setCenter(buttons);

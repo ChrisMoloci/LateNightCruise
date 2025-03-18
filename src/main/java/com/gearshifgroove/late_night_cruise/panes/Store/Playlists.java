@@ -3,6 +3,7 @@ package com.gearshifgroove.late_night_cruise.panes.Store;
 import com.gearshifgroove.late_night_cruise.Const;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.*;
 import com.gearshifgroove.late_night_cruise.panes.Store.SubPlaylist.CreatePlaylistView;
+import com.gearshifgroove.late_night_cruise.panes.Store.SubPlaylist.Ownership;
 import com.gearshifgroove.late_night_cruise.panes.StorePane;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -48,6 +49,7 @@ public class Playlists extends VBox {
         this.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
         this.setMaxWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
         this.setMinHeight(Const.WINDOW_HEIGHT);
+
 //        this.setSelectionModel(null);
 //        this.setEditable(false);
 ////        this.setMouseTransparent(true);

@@ -3,6 +3,7 @@ package com.gearshifgroove.late_night_cruise.panes;
 import com.gearshifgroove.late_night_cruise.Const;
 import com.gearshifgroove.late_night_cruise.CustomUIElements.PaddingBox;
 import com.gearshifgroove.late_night_cruise.LateNightCruise;
+import com.gearshifgroove.late_night_cruise.ScoreSystem;
 import com.gearshifgroove.late_night_cruise.panes.Store.Artists;
 import com.gearshifgroove.late_night_cruise.panes.Store.Genres;
 import com.gearshifgroove.late_night_cruise.panes.Store.Home;
@@ -15,9 +16,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import org.w3c.dom.Text;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 public class StorePane extends BorderPane {
+    public static Text coinCount;
+
     public static Pane displayPane = new Pane();
     public StorePane() {
         this.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
@@ -29,11 +34,25 @@ public class StorePane extends BorderPane {
 //        sideMenu.setSpacing(10);
         sideMenu.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        Button back = new Button("Back");
+        HBox menuAndCoinCount = new HBox();
+        menuAndCoinCount.setMinWidth(sideMenu.getMinWidth());
+        menuAndCoinCount.setMaxWidth(sideMenu.getMinWidth());
+
+        Button back = new Button("Main Menu");
         back.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), CornerRadii.EMPTY, Insets.EMPTY)));
         back.setTextFill(Color.WHITE);
-        back.setMinWidth(sideMenu.getMinWidth());
-        back.setMaxWidth(sideMenu.getMinWidth());
+        back.setMinWidth(sideMenu.getMinWidth() - 40);
+        back.setMaxWidth(sideMenu.getMinWidth() - 40);
+
+        coinCount = new Text("$" + ScoreSystem.getStoredScore());
+//        coinCount.setFont(Font.font("Arial", 20));
+        coinCount.setFill(Color.WHITE);
+
+        menuAndCoinCount.getChildren().addAll(back, new PaddingBox(0, 10), coinCount);
+
+        Text store = new Text("Store");
+        store.setFont(Font.font("Arial", FontWeight.BOLD, 30));
+        store.setFill(Color.WHITE);
 
         TextField search = new TextField("Search...");
         search.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), null, null)));
@@ -68,7 +87,7 @@ public class StorePane extends BorderPane {
         debug.setMinWidth(sideMenu.getMinWidth());
         debug.setMaxWidth(sideMenu.getMinWidth());
 
-        sideMenu.getChildren().addAll(back, new PaddingBox(40), search, new PaddingBox(10), home, genres, artists, new PaddingBox(30), playlistsButton, debug);
+        sideMenu.getChildren().addAll(menuAndCoinCount, new PaddingBox(10, 0), store, new PaddingBox(10, 0), search, new PaddingBox(10, 0), home, genres, artists, new PaddingBox(30, 0), playlistsButton, debug);
 
         // Main Content
         displayPane = new Pane(new Home());

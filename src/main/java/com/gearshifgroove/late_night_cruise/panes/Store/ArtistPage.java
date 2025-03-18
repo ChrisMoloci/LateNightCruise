@@ -50,15 +50,21 @@ public class ArtistPage extends ScrollPane {
         int songIndex = 0;
         int songRow = 0;
         for (Song song : songs) {
+            // Check if songIndex is at it's highest possible position and start a new row if true
             if ((songIndex % 4) == 0) {
                 songRow++;
+                songIndex = 0;
             }
+            boolean songOwned = false;
             for (String ownedSong : ownedSongs) {
-                if (ownedSong.equals(song.getId())) {
-                    songGrid.add(new GridBasedSongListing(song, true), songIndex, songRow);
-                } else {
-                    songGrid.add(new GridBasedSongListing(song, false), songIndex, songRow);
+                if (song.getId().equals(ownedSong)) {
+                    songOwned = true;
                 }
+            }
+            if (songOwned) {
+                songGrid.add(new GridBasedSongListing(song, true), songIndex, songRow);
+            } else {
+                songGrid.add(new GridBasedSongListing(song, false), songIndex, songRow);
             }
             songIndex++;
         }

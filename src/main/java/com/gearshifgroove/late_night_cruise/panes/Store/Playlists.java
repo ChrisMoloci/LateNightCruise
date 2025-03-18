@@ -41,14 +41,15 @@ public class Playlists extends VBox {
 
         scrollPane.setContent(playlists);
         scrollPane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-        scrollPane.setMinHeight(Const.WINDOW_HEIGHT);
+        scrollPane.setMaxHeight(Const.WINDOW_HEIGHT);
         scrollPane.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
+        scrollPane.setMinHeight(0);
         this.setMaxWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
         this.getChildren().add(scrollPane);
 
         this.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
         this.setMaxWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
-        this.setMinHeight(Const.WINDOW_HEIGHT);
+        this.setMaxHeight(Const.WINDOW_HEIGHT);
 
 //        this.setSelectionModel(null);
 //        this.setEditable(false);

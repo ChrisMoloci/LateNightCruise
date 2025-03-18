@@ -19,6 +19,8 @@ public class PlaylistListing extends GridPane {
 
         this.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), null, null)));
         this.setMaxWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
+        this.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4 - 2);
+        this.setMinHeight(20);
 //        this.setOnMouseClicked(event -> {
 //            System.out.println("Playlist: " + playlist.getName());
 //        });

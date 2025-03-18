@@ -5,10 +5,10 @@ import com.gearshifgroove.late_night_cruise.LateNightCruise;
 import com.gearshifgroove.late_night_cruise.ScoreSystem;
 import com.gearshifgroove.late_night_cruise.scenes.GameScene;
 import com.gearshifgroove.late_night_cruise.scenes.ItemShopScene;
-import com.gearshifgroove.late_night_cruise.scenes.Store.Data.Artist;
-import com.gearshifgroove.late_night_cruise.scenes.Store.Data.DB;
-import com.gearshifgroove.late_night_cruise.scenes.Store.Data.Song;
-import com.gearshifgroove.late_night_cruise.scenes.Store.Data.Songs;
+import com.gearshifgroove.late_night_cruise.panes.Store.Data.Artist;
+import com.gearshifgroove.late_night_cruise.panes.Store.Data.DB;
+import com.gearshifgroove.late_night_cruise.panes.Store.Data.Song;
+import com.gearshifgroove.late_night_cruise.panes.Store.Data.Songs;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.DB;
 
 import com.gearshifgroove.late_night_cruise.scenes.StoreScene;

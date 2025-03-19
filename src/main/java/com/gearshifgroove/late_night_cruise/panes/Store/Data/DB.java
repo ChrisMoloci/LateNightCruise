@@ -17,6 +17,19 @@ public class DB {
             artists.put("0001", new Artist("Christian Moloci", "0001"));
             artists.get("0001").addSong(new Song("0001", "Lofi", "Intro Song", artists.get("0001").getName()));
             artists.get("0001").addSong(new Song("0002", "Unknown Genre", "Debug Song", artists.get("0001").getName()));
+            artists.get("0001").addSong(new Song("0018", "Unknown Genre", "Fresh Start", artists.get("0001").getName()));
+            artists.get("0001").addSong(new Song("0019", "Unknown Genre", "Sonorous Chamber", artists.get("0001").getName()));
+            artists.get("0001").addSong(new Song("0020", "Unknown Genre", "Sunrise Over Detroit", artists.get("0001").getName()));
+            artists.get("0001").addSong(new Song("0021", "Unknown Genre", "Nocturnal Rhythm", artists.get("0001").getName()));
+            artists.get("0001").addSong(new Song("0022", "Unknown Genre", "Frog on a Log", artists.get("0001").getName()));
+            artists.get("0001").addSong(new Song("0023", "Unknown Genre", "Idea 1", artists.get("0001").getName()));
+            artists.get("0001").addSong(new Song("0024", "Unknown Genre", "Surfin in an Aqueduct", artists.get("0001").getName()));
+            artists.get("0001").addSong(new Song("0025", "Unknown Genre", "Playdate", artists.get("0001").getName()));
+            artists.get("0001").addSong(new Song("0026", "Unknown Genre", "Idea 2", artists.get("0001").getName()));
+            artists.get("0001").addSong(new Song("0027", "Unknown Genre", "Idea 3", artists.get("0001").getName()));
+            artists.get("0001").addSong(new Song("0028", "Unknown Genre", "Idea 4", artists.get("0001").getName()));
+            artists.get("0001").addSong(new Song("0029", "Unknown Genre", "Idea 5", artists.get("0001").getName()));
+            artists.get("0001").addSong(new Song("0030", "Unknown Genre", "Aquatic Adventure", artists.get("0001").getName()));
 
             artists.put("0002", new Artist("Aaron Kenny", "0002"));
             artists.get("0002").addSong(new Song("0003", "Unknown Genre", "Beneath the Moonlight", artists.get("0002").getName()));

@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 public class ArtistListing extends GridPane {
     public ArtistListing(Artist artist) {
         this.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), null, null)));
-        this.setPadding(new Insets(10, 0, 10, 0));
+        this.setPadding(new Insets(10, 0, 10, 10));
         this.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, new CornerRadii(10), null, new Insets(3, 5, 3, 5))));
 
         ColumnConstraints artistInfo = new ColumnConstraints();

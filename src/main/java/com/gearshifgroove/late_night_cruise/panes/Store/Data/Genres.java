@@ -10,7 +10,15 @@ public class Genres {
         genres = new ArrayList<>();
         genres.addAll(Arrays.asList(
             new Genre("Unknown Genre"),
-            new Genre("Lofi")
+            new Genre("Lofi"),
+            new Genre("Electronic"),
+            new Genre("Synthwave"),
+            new Genre("Hip-Hop"),
+            new Genre("Commercial"),
+            new Genre("Inspirational"),
+            new Genre("Piano"),
+            new Genre("Dance"),
+            new Genre("Emotional")
         ));
     }
 
@@ -22,5 +30,9 @@ public class Genres {
             }
         }
         return returnGenre;
+    }
+
+    public static ArrayList<Genre> getGenres() {
+        return genres;
     }
 }

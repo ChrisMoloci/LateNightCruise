@@ -18,10 +18,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class GridBasedSongListing extends VBox {
-    public static boolean songOwned = false;
+    private boolean songOwned;
 
     public GridBasedSongListing(Song song, boolean owned) {
         songOwned = owned;
+
         this.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, new CornerRadii(16), null, new Insets(10, 4, 10, 0))));
         this.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), new CornerRadii(16), new Insets(10, 4, 10, 0))));
 //        this.setPadding(new Insets(10, 10, 10, 10));
@@ -71,11 +72,14 @@ public class GridBasedSongListing extends VBox {
             GlobalPlayer.changeSong(song.getMedia());
         });
 
+        System.out.println(songOwned);
         addToPlaylistButton.setOnAction(e -> {
+            System.out.println(songOwned);
             if (songOwned) {
                 StorePane.displayPane.getChildren().clear();
                 StorePane.displayPane.getChildren().add(new AddToPlaylistView(song));
-            } else {
+            }
+            else {
                 if (ScoreSystem.getStoredScore() >= 10) {
                     Ownership.addOwnedSongs(song.getId());
                     ScoreSystem.updateStoredScore(ScoreSystem.getStoredScore() - 10);

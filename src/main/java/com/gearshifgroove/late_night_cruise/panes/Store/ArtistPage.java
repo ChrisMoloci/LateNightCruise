@@ -59,6 +59,7 @@ public class ArtistPage extends ScrollPane {
             for (String ownedSong : ownedSongs) {
                 if (song.getId().equals(ownedSong)) {
                     songOwned = true;
+                    break;
                 }
             }
             if (songOwned) {

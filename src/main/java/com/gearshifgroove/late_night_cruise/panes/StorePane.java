@@ -111,7 +111,7 @@ public class StorePane extends BorderPane {
 
         genres.setOnAction(e -> {
             displayPane.getChildren().clear();
-            displayPane.getChildren().add(new Genres());
+            displayPane.getChildren().add(new GenresView());
         });
 
         artists.setOnAction(e -> {

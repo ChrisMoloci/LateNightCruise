@@ -19,10 +19,12 @@ public class SongListing extends GridPane {
     private boolean songOwned;
 
     public SongListing(Song song, boolean owned) {
+        System.out.println(song.getGenre().getName());
+
         this.songOwned = owned;
         this.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), null, null)));
-        this.setPadding(new Insets(10, 0, 10, 0));
         this.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, new CornerRadii(10), null, new Insets(3, 5, 3, 5))));
+        this.setPadding(new Insets(10, 0, 10, 0));
 
         ColumnConstraints play = new ColumnConstraints();
         play.setPercentWidth(10);

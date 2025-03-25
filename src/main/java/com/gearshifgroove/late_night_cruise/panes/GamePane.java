@@ -17,6 +17,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -48,7 +50,6 @@ public class GamePane extends StackPane {
     private boolean keyPressed = false;
     private char direction = 'N';
 
-
     /// so we can control it later
     private Timeline timeline;
     private GraphicsContext gc;
@@ -56,7 +57,8 @@ public class GamePane extends StackPane {
     private Text gameOverText;
     private VBox buttonsLayout;
     private boolean isGameOver = false;
-
+    private boolean isPaused= false;
+    private Button pauseButton;
 
     /// Creating gas level
     private double gasLevel = 99.9;
@@ -65,7 +67,7 @@ public class GamePane extends StackPane {
         terrainImage = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/track.png"));
         carImage = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/car.png"));
         coinImage = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/coin.png"));
-        fuelImage = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/fuel.png"),50,50, true,true);
+        fuelImage = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/gas-can.png"));
         terrainTile1 = new Tile(0, 0, 0, 3, terrainImage);
         terrainTile2 = new Tile(0, 1080, 0, 3, terrainImage);
         car = new Player(883, 490, carImage);
@@ -86,10 +88,17 @@ public class GamePane extends StackPane {
 
         Canvas canvas = new Canvas(1920, 1080);
          gc = canvas.getGraphicsContext2D();
-
         canvas.requestFocus();
 
         this.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.PAUSE || event.getCode() == KeyCode.ESCAPE){
+                hitPause();
+            }
+
+            if (isPaused){
+                isPaused = false;
+            }
+
 //            System.out.println(event.getCode());
 //            System.out.println("Key pressed");
 
@@ -110,9 +119,6 @@ public class GamePane extends StackPane {
                     break;
             }
         });
-
-
-
 
 //        this.setOnKeyReleased(event -> {
 //            switch (event.getCode()) {
@@ -140,26 +146,23 @@ public class GamePane extends StackPane {
         this.getChildren().add(canvas);
     }
 
-
     /// This will generate a random lane for the coin or fuel
     private int getRandomLane(){
-
-
         /// Possible lanes
-        int[] lanes = {795,883,971,1059};
+        int[] lanes = {800,900,982,1068};
         /// Randomly choose one lane
         return lanes[rand.nextInt(lanes.length)];
         //return rand.nextInt(maxX-minX + 1) + minX;
     }
 
-
-
-
-
-
     public void update(GraphicsContext gc) {
         if (isGameOver){
             showGameOverScreen(gc);
+            return;
+        }
+
+        if (isPaused){
+            showPausedMessage();
             return;
         }
 
@@ -178,8 +181,6 @@ public class GamePane extends StackPane {
         }
 
         gc.clearRect(0, 0, Const.WINDOW_WIDTH, Const.WINDOW_HEIGHT);
-
-
         terrainTile1.setyCoord(terrainTile1.getyCoord() + terrainTile1.getyCordSpeed());
         terrainTile2.setyCoord(terrainTile2.getyCoord() + terrainTile2.getyCordSpeed());
 
@@ -210,9 +211,6 @@ public class GamePane extends StackPane {
         gc.drawImage(terrainTile2.getImage(), terrainTile2.getxCoord(), terrainTile2.getyCoord());
 
         gc.drawImage(car.getImage(), car.getxCoord(), car.getyCoord());
-
-
-
         /// Coin & Fuel
         /// Random number 1 and 1000
         int randNum = rand.nextInt(1000) +1;
@@ -240,10 +238,6 @@ public class GamePane extends StackPane {
             }
         }
 
-
-
-
-
         List<Coin> collectedCoins = new ArrayList<>();
         for(Coin coin:  coins){
             /// Moving it downwards by 2 pixels per frame
@@ -257,8 +251,7 @@ public class GamePane extends StackPane {
                 coin.setxCoord(getRandomLane());
         }
 
-            gc.drawImage(coin.getImage(),coin.getxCoord(),coin.getyCoord(),30,30);
-
+            gc.drawImage(coin.getImage(),coin.getxCoord(),coin.getyCoord());
             /// Check for the Collision with the car.
             if (Math.abs(car.getxCoord() - coin.getxCoord())<30 && Math.abs(car.getyCoord()-coin.getyCoord())<30){
                 /// Getting the points by 1
@@ -271,8 +264,6 @@ public class GamePane extends StackPane {
             }
         }
 
-
-
         List<Fuel> collectedFuels = new ArrayList<>();
         for (Fuel fuel: fuels){
             fuel.setyCoord(fuel.getyCoord() + 2);
@@ -282,7 +273,7 @@ public class GamePane extends StackPane {
                 fuel.setyCoord(-50);
                 fuel.setxCoord(getRandomLane());
             }
-            gc.drawImage(fuel.getImage(),fuel.getxCoord(), fuel.getyCoord(),30,30);
+            gc.drawImage(fuel.getImage(),fuel.getxCoord(), fuel.getyCoord());
 
             if (Math.abs(car.getxCoord() - fuel.getxCoord())<30 && Math.abs(car.getyCoord() - fuel.getyCoord())<30){
                 car.setGasCount(car.getGasCount()+1);
@@ -305,24 +296,56 @@ public class GamePane extends StackPane {
             isGameOver = true;
         }
 
-        /// Round the gas level to 4 decimal places before displaying
-        double roundedGasLevel = Math.round(gasLevel * 10000.0) /10000.0;
+        /// Round the gas level
+        double roundedGasLevel = Math.round(gasLevel * 100.0) /100.0;
         if (gasLevel <= 0){
             gasLevel =0;
             System.out.println("Game Over!");
         }
+        drawScoreBox(gc,roundedGasLevel);
 
-                drawScoreBox(gc);
+    }
+
+    private void hitPause(){
+        isPaused = !isPaused;
+
+        if (isPaused){
+            timeline.pause();
+            showPausedMessage();
+        }else{
+            timeline.play();
+            removePauseMessage();
+        }
+    }
+
+    private void showPausedMessage( ){
+        if (pauseButton == null){
+            pauseButton = new Button("Go");
+            pauseButton.setFont(Font.font(60));
+            pauseButton.setFont(Font.font("Arial", FontWeight.BOLD,20));
+            pauseButton.setTextFill(Color.RED);
+            pauseButton.setLayoutX(Const.WINDOW_WIDTH /2-100);
+            pauseButton.setLayoutY(Const.WINDOW_HEIGHT/2-100);
+            pauseButton.setOnMouseClicked(mouseEvent -> hitPause());
+            this.getChildren().add(pauseButton);
+        }
+    }
+
+    private void removePauseMessage(){
+        if (pauseButton != null){
+            this.getChildren().remove(pauseButton);
+            pauseButton = null;
+        }
     }
 
     private void showGameOverScreen(GraphicsContext gc) {
-
         if (gameOverText == null) {
-                gameOverText = new Text("Game Over!");
-                gameOverText.setStyle("-fx-font-size: 60px; -fx-font-weight: bold;");
-                gameOverText.setX(Const.WINDOW_WIDTH / 2 - 100);
-                gameOverText.setY(Const.WINDOW_HEIGHT / 2 - 100);
-                this.getChildren().add(gameOverText);
+            gameOverText = new Text("Game Over!");
+            gameOverText.setFont(Font.font(60));
+            gameOverText.setFont(Font.font("Arial", FontWeight.BOLD,20));
+            gameOverText.setX(Const.WINDOW_WIDTH / 2 - 100);
+            gameOverText.setY(Const.WINDOW_HEIGHT / 2 - 100);
+            this.getChildren().add(gameOverText);
         }
 
         if (buttonsLayout == null) {
@@ -335,15 +358,18 @@ public class GamePane extends StackPane {
             playAgainButton.setOnAction(e -> {
                 resetGame();
             });
-            playAgainButton.setStyle("-fx-font-size: 30px; -fx-background-color: #4CAF50; -fx-text-fill: white;");
+            playAgainButton.setTextFill(Color.WHITE);
+            playAgainButton.setFont(Font.font(60));
+            playAgainButton.setFont(Font.font("Arial", FontWeight.BOLD,20));
             buttonsLayout.getChildren().add(playAgainButton);
 
             // Main Menu Button
             Button mainMenuButton = new Button("Main Menu");
             mainMenuButton.setOnAction(e -> goToMainMenu());
-            mainMenuButton.setStyle("-fx-font-size: 30px; -fx-background-color: #FF5733; -fx-text-fill: white;");
+            mainMenuButton.setFont(Font.font(60));
+            mainMenuButton.setFont(Font.font("Arial",FontWeight.BOLD,20));
+            mainMenuButton.setTextFill(Color.WHITE);
             buttonsLayout.getChildren().add(mainMenuButton);
-
             this.getChildren().add(buttonsLayout);  // Add buttons to the pane
         }
     }
@@ -367,27 +393,16 @@ public class GamePane extends StackPane {
           buttonsLayout = null;
       }
 
-
-
-
-        // Reset game-over flag and other necessary states
         isGameOver = false;
-
-
         System.out.println("Game has been reset");
     }
-
-
-
 
     private void goToMainMenu(){
         /// Replace with actual main menu scene
         LateNightCruise.mainStage.setScene(new MainMenuScene());
     }
 
-
-
-    private void drawScoreBox(GraphicsContext gc){
+    private void drawScoreBox(GraphicsContext gc, double roundedGasLevel){
         ///  Coin box
         gc.setFill(Color.BLACK);
 
@@ -396,7 +411,6 @@ public class GamePane extends StackPane {
         gc.setFill(Color.WHITE);
         gc.fillText("Coins: " + car.getCoinCount(),Const.WINDOW_WIDTH -140,330);
 
-
         /// Gas Box
         gc.setFill(Color.BLACK);
 
@@ -404,7 +418,8 @@ public class GamePane extends StackPane {
         gc.fillRect(Const.WINDOW_WIDTH-150,200,120,50);
         gc.setFill(Color.WHITE);
         gc.fillText("Gas: "+ car.getGasCount(),Const.WINDOW_WIDTH -140,230);
-        gc.fillText("gas Level:" + gasLevel, Const.WINDOW_WIDTH -140,250);
+        String formattedGasLevel = String.format("%.2f", roundedGasLevel);
+        gc.fillText("gas Level:" + roundedGasLevel, Const.WINDOW_WIDTH -140,250);
     }
 }
 

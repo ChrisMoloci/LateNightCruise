@@ -105,6 +105,7 @@ public class MainMenuPane extends BorderPane {
         store.setOnAction(event -> {
             LateNightCruise.mainStage.setScene(new StoreScene());
             GlobalPlayer.stopMedia();
+            StorePane.mediaControl.setImage(StorePane.play);
         });
 
         settings.setOnAction(e->{

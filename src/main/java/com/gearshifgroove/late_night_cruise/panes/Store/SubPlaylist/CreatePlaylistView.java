@@ -6,6 +6,7 @@ import com.gearshifgroove.late_night_cruise.panes.Store.Data.*;
 import com.gearshifgroove.late_night_cruise.panes.Store.Playlists;
 import com.gearshifgroove.late_night_cruise.panes.Store.SongListing;
 import com.gearshifgroove.late_night_cruise.panes.StorePane;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -24,26 +25,38 @@ public class CreatePlaylistView extends BorderPane {
     private static ArrayList<Playlist> playlists;
 
     public CreatePlaylistView() {
+        this.setPadding(new Insets(10, 10, 10, 10));
+
         playlists = UserLib.getPlaylists();
+
+        VBox top = new VBox();
         Text title = new Text("Create a new playlist");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 50));
-//        title.setTextAlignment(TextAlignment.CENTER);
-        this.setTop(title);
+        title.setFill(Color.WHITE);
+        top.getChildren().addAll(new PaddingBox(40, 0), title);
+        this.setTop(top);
 
         VBox form = new VBox();
         TextField name = new TextField();
         name.setPromptText("Playlist name");
+        name.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), null, null)));
 
         Button create = new Button("Create");
+        create.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), null, null)));
+        create.setTextFill(Color.WHITE);
 
         Button cancel = new Button("Cancel");
+        cancel.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), null, null)));
+        cancel.setTextFill(Color.WHITE);
 
         Button createTemplatedPlaylist = new Button("Create templated playlist (debug)");
+        createTemplatedPlaylist.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), null, null)));
+        createTemplatedPlaylist.setTextFill(Color.WHITE);
 
         HBox buttons = new HBox();
         buttons.getChildren().addAll(create, cancel, createTemplatedPlaylist);
 
-        form.getChildren().addAll(name, new PaddingBox(20, 0), buttons);
+        form.getChildren().addAll(new PaddingBox(80, 0), name, new PaddingBox(20, 0), buttons);
         this.setCenter(form);
         BorderPane.setAlignment(form, Pos.CENTER);
         form.setMinHeight(200);

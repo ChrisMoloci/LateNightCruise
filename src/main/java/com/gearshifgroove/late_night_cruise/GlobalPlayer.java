@@ -1,8 +1,11 @@
 package com.gearshifgroove.late_night_cruise;
 
+import com.gearshifgroove.late_night_cruise.panes.MainMenuPane;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Playlist;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Song;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.UserLib;
+import com.gearshifgroove.late_night_cruise.panes.StorePane;
+import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -17,6 +20,8 @@ public class GlobalPlayer {
 //    public static ArrayList<Song> selectedPlaylist;
     public static Playlist selectedPlaylist;
     public static boolean muteState = false;
+    public static Image play;
+    public static Image pause;
 
     static {
 //        ArrayList<Playlist> playlists = new ArrayList<>();
@@ -59,12 +64,14 @@ public class GlobalPlayer {
             }
             player = new MediaPlayer(media);
             player.play();
+            StorePane.mediaControl.setImage(StorePane.pause);
         }
     }
 
     public static void stopMedia() {
         if (player != null) {
             player.stop();
+            player = null;
         }
     }
 

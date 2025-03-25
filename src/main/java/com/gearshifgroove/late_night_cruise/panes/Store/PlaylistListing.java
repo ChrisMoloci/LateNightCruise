@@ -10,6 +10,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
 public class PlaylistListing extends GridPane {
     private static Playlist playlist;
     public PlaylistListing(Playlist playlist) {
@@ -47,6 +50,13 @@ public class PlaylistListing extends GridPane {
 //            GlobalPlayer.playPlaylist(playlist.getSongs(), 0);
 //            GlobalPlayer.selectedPlaylist = playlist.getSongs();
             GlobalPlayer.selectedPlaylist = playlist;
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter("selectedPlaylist.txt"));
+                writer.write(playlist.getName());
+                writer.close();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
         });
 //        Text artistName = new Text("Artist: ");
 

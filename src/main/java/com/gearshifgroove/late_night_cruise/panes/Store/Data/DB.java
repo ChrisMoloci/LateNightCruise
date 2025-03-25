@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public class DB {
     private static HashMap<String, Artist> artists = new HashMap<>();
+    public static Playlist demoPlaylist;
 
     static {
         artists = new HashMap<>();
@@ -71,6 +72,12 @@ public class DB {
             System.out.println("An error occured while initilizing music database");
             e.printStackTrace();
         }
+
+        demoPlaylist = new Playlist(0, "Late Night Cruise");
+        demoPlaylist.addSong(artists.get("0001").getSong("0018"));
+        demoPlaylist.addSong(artists.get("0005").getSong("0007"));
+        demoPlaylist.addSong(artists.get("0001").getSong("0019"));
+        demoPlaylist.addSong(artists.get("0001").getSong("0022"));
     }
 
     public static HashMap<String, Artist> getArtists() {

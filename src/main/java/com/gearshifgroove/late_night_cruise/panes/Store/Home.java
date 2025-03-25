@@ -101,8 +101,9 @@ public class Home extends ScrollPane {
     public static boolean checkOwnership(String song) {
         boolean status = false;
         for (String songToCheck : ownedSongs) {
-            if (songToCheck.equals(song)) {
+            if (song.equals(songToCheck)) {
                 status = true;
+                break;
             } else {
                 status = false;
             }

@@ -4,11 +4,9 @@ import com.gearshifgroove.late_night_cruise.Const;
 import com.gearshifgroove.late_night_cruise.GlobalPlayer;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Playlist;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Song;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -17,10 +15,9 @@ public class PlaylistListing extends GridPane {
     public PlaylistListing(Playlist playlist) {
         this.playlist = playlist;
 
-        this.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), null, null)));
-        this.setMaxWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
-        this.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4 - 2);
-        this.setMinHeight(20);
+        this.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), new CornerRadii(10), new Insets(3, 5, 3, 5))));
+        this.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, new CornerRadii(10), null, new Insets(3, 5, 3, 5))));
+        this.setPadding(new Insets(10, 10, 10, 10));
 //        this.setOnMouseClicked(event -> {
 //            System.out.println("Playlist: " + playlist.getName());
 //        });
@@ -36,7 +33,7 @@ public class PlaylistListing extends GridPane {
         this.getColumnConstraints().addAll(play, playlistInfo);
 
         Button selectButton = new Button("Select Playlist");
-        selectButton.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), null, null)));
+        selectButton.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
         selectButton.setTextFill(Color.WHITE);
 
         Text playlistName = new Text(playlist.getName());
@@ -61,6 +58,9 @@ public class PlaylistListing extends GridPane {
         this.add(playlistName, 1, 0);
 //        this.add(artistName, 1, 1);
 //        this.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH/4);
+
+        this.setMaxWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
+        this.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4 - 18);
     }
 
     public Playlist getPlaylist() {

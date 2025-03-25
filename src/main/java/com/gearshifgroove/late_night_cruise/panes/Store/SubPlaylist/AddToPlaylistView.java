@@ -1,5 +1,6 @@
 package com.gearshifgroove.late_night_cruise.panes.Store.SubPlaylist;
 
+import com.gearshifgroove.late_night_cruise.Const;
 import com.gearshifgroove.late_night_cruise.GlobalPlayer;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Artist;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Playlist;
@@ -27,6 +28,7 @@ public class AddToPlaylistView extends BorderPane {
 
         // Get current playlist data
         ListView<PlaylistListing> playlists = new ListView();
+        playlists.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
 
         // Convert playlist data into PlaylistListings and add them to a ListView
         ArrayList<Playlist> availablePlaylists = UserLib.getPlaylists();
@@ -68,5 +70,7 @@ public class AddToPlaylistView extends BorderPane {
                 e.printStackTrace();
             }
         });
+
+        this.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
     }
 }

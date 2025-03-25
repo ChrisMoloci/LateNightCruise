@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class GlobalPlayer {
     public static MediaPlayer player;
     public static ArrayList<Song> selectedPlaylist;
+    public static boolean muteState = false;
 
     static {
         ArrayList<Playlist> playlists = new ArrayList<>();
@@ -20,13 +21,27 @@ public class GlobalPlayer {
         }
     }
 
-    public static void changeSong(String file) {
-        Media media = new Media(new File(file).toURI().toString());
-        if (player != null) {
-            player.stop();
+    public static void changeAudioMuteState(boolean mute) {
+        if (mute) {
+            muteState = true;
+        } else {
+            muteState = false;
         }
-        player = new MediaPlayer(media);
-        player.play();
+    }
+
+    public static boolean getAudioMuteState() {
+        return muteState;
+    }
+
+    public static void changeSong(String file) {
+        if (!muteState) {
+            Media media = new Media(new File(file).toURI().toString());
+            if (player != null) {
+                player.stop();
+            }
+            player = new MediaPlayer(media);
+            player.play();
+        }
     }
 
     public static void stopMedia() {
@@ -36,14 +51,16 @@ public class GlobalPlayer {
     }
 
     public static void playPlaylist(ArrayList<Song> songs, int i) {
-        // Change the song
-        changeSong(songs.get(i).getMedia());
-        // Use recursion to play the next song
-        player.setOnEndOfMedia(() -> {
-            if (i < songs.size() - 1) {
-                playPlaylist(songs, i + 1);
-            }
-        });
+        if (!muteState) {
+            // Change the song
+            changeSong(songs.get(i).getMedia());
+            // Use recursion to play the next song
+            player.setOnEndOfMedia(() -> {
+                if (i < songs.size() - 1) {
+                    playPlaylist(songs, i + 1);
+                }
+            });
+        }
     }
 
 }

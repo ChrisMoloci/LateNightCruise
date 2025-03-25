@@ -2,6 +2,7 @@ package com.gearshifgroove.late_night_cruise.panes;
 
 import com.gearshifgroove.late_night_cruise.Const;
 import com.gearshifgroove.late_night_cruise.CustomUIElements.PaddingBox;
+import com.gearshifgroove.late_night_cruise.GlobalPlayer;
 import com.gearshifgroove.late_night_cruise.LateNightCruise;
 import com.gearshifgroove.late_night_cruise.ScoreSystem;
 import com.gearshifgroove.late_night_cruise.panes.Store.*;
@@ -100,7 +101,8 @@ public class StorePane extends BorderPane {
 //        displayPane = new Pane(new Playlists());
 
         back.setOnAction(event -> {
-           LateNightCruise.mainStage.setScene(new MainMenuScene());
+            GlobalPlayer.stopMedia();
+            LateNightCruise.mainStage.setScene(new MainMenuScene());
         });
 
 

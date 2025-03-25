@@ -14,7 +14,8 @@ import java.util.ArrayList;
 
 public class GlobalPlayer {
     public static MediaPlayer player;
-    public static ArrayList<Song> selectedPlaylist;
+//    public static ArrayList<Song> selectedPlaylist;
+    public static Playlist selectedPlaylist;
     public static boolean muteState = false;
 
     static {
@@ -67,14 +68,14 @@ public class GlobalPlayer {
         }
     }
 
-    public static void playPlaylist(ArrayList<Song> songs, int i) {
+    public static void playPlaylist(Playlist playlist, int i) {
         if (!muteState) {
             // Change the song
-            changeSong(songs.get(i).getMedia());
+            changeSong(playlist.getSongs().get(i).getMedia());
             // Use recursion to play the next song
             player.setOnEndOfMedia(() -> {
-                if (i < songs.size() - 1) {
-                    playPlaylist(songs, i + 1);
+                if (i < playlist.getSongs().size() - 1) {
+                    playPlaylist(playlist, i + 1);
                 }
             });
         }

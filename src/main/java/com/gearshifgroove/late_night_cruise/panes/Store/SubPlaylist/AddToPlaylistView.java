@@ -1,5 +1,6 @@
 package com.gearshifgroove.late_night_cruise.panes.Store.SubPlaylist;
 
+import com.gearshifgroove.late_night_cruise.GlobalPlayer;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Artist;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Playlist;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Song;
@@ -59,6 +60,9 @@ public class AddToPlaylistView extends BorderPane {
                     }
                 } else {
                     System.out.println("Song already added to playlist");
+                }
+                if (currentPlaylist.getName().equals(GlobalPlayer.selectedPlaylist.getName())) {
+                    GlobalPlayer.selectedPlaylist = currentPlaylist;
                 }
             } catch (Exception e) {
                 e.printStackTrace();

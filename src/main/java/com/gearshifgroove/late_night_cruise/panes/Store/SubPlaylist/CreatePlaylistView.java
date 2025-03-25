@@ -21,7 +21,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class CreatePlaylistView extends BorderPane {
+    private static ArrayList<Playlist> playlists;
+
     public CreatePlaylistView() {
+        playlists = UserLib.getPlaylists();
         Text title = new Text("Create a new playlist");
         title.setFont(Font.font("Arial", FontWeight.BOLD, 50));
 //        title.setTextAlignment(TextAlignment.CENTER);
@@ -51,8 +54,14 @@ public class CreatePlaylistView extends BorderPane {
         // Create a new playlist
         create.setOnAction(e -> {
            try {
-               ArrayList<Playlist> playlists = UserLib.getPlaylists();
+//               ArrayList<Playlist> playlists = UserLib.getPlaylists();
+//               for (Playlist playlist : playlists) {
+//                   if (playlist.getName().equals(name.getText())) {
+//                       name.setText(name.getText() + "(0)");
+//                   }
+//               }
                ObjectOutputStream createPlaylistObject = new ObjectOutputStream(new FileOutputStream("playlist.dat"));
+               name.setText(checkDuplicates(name.getText()));
                for (Playlist playlist : playlists) {
                    createPlaylistObject.writeObject(playlist);
                }
@@ -80,7 +89,8 @@ public class CreatePlaylistView extends BorderPane {
         // REMOVE IN PROD - FOR DEBUGGING - CREATES A PLAYLIST WITH EVERY SONG AVAILABLE
         createTemplatedPlaylist.setOnAction(e -> {
             try {
-                ArrayList<Playlist> playlists = UserLib.getPlaylists();
+                playlists = UserLib.getPlaylists();
+                name.setText(checkDuplicates(name.getText()));
                 ObjectOutputStream createPlaylistObject = new ObjectOutputStream(new FileOutputStream("playlist.dat"));
                 for (Playlist playlist : playlists) {
                     createPlaylistObject.writeObject(playlist);
@@ -119,5 +129,15 @@ public class CreatePlaylistView extends BorderPane {
     public static void returnToPlaylists() {
         StorePane.displayPane.getChildren().clear();
         StorePane.displayPane.getChildren().add(new Playlists());
+    }
+
+    public static String checkDuplicates(String newPlaylistName) {
+        for (Playlist playlist : playlists) {
+            if (playlist.getName().equals(newPlaylistName)) {
+                newPlaylistName = playlist.getName() + "(copy)";
+                checkDuplicates(newPlaylistName);
+            }
+        }
+        return newPlaylistName;
     }
 }

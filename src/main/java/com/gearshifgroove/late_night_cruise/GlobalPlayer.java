@@ -6,7 +6,10 @@ import com.gearshifgroove.late_night_cruise.panes.Store.Data.UserLib;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 public class GlobalPlayer {
@@ -15,9 +18,16 @@ public class GlobalPlayer {
     public static boolean muteState = false;
 
     static {
-        ArrayList<Playlist> playlists = new ArrayList<>();
-        if (playlists.size() > 0) {
-             selectedPlaylist = UserLib.getPlaylists().get(0).getSongs();
+//        ArrayList<Playlist> playlists = new ArrayList<>();
+//        if (playlists.size() > 0) {
+//             selectedPlaylist = UserLib.getPlaylists().get(0).getSongs();
+//        }
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("settings.txt"));
+            muteState = Boolean.parseBoolean(reader.readLine());
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -26,6 +36,13 @@ public class GlobalPlayer {
             muteState = true;
         } else {
             muteState = false;
+        }
+        try {
+            FileWriter writer = new FileWriter("settings.txt");
+            writer.write(String.valueOf(muteState));
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

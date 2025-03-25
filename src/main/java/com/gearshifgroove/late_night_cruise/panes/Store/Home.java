@@ -27,7 +27,7 @@ public class Home extends ScrollPane {
 
         VBox content = new VBox();
         content.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-        content.setMinHeight(Const.WINDOW_HEIGHT);
+//        content.setMinHeight(Const.WINDOW_HEIGHT);
         content.setMaxHeight(Const.WINDOW_HEIGHT);
         content.setMinWidth(mainSectionWidth - 15);
         content.setMaxWidth(mainSectionWidth - 15);

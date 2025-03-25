@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class UserLib {
-    private static ArrayList<Playlist> playlists = null;
+    private static ArrayList<Playlist> playlists;
 
     public static ArrayList<Playlist> getPlaylists() {
         playlists = new ArrayList<>();

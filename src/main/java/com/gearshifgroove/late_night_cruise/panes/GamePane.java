@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -35,6 +36,7 @@ import java.io.File;
 
 
 public class GamePane extends StackPane {
+    AudioClip carMedia;
     private Image terrainImage;
     private Image carImage;
     private Tile terrainTile1;
@@ -70,6 +72,11 @@ public class GamePane extends StackPane {
         terrainTile2 = new Tile(0, 1080, 0, 3, terrainImage);
         car = new Player(883, 490, carImage);
         car.setCoinCount(ScoreSystem.getStoredScore());
+
+        carMedia = new AudioClip(new File("src/main/resources/com/gearshifgroove/late_night_cruise/carSound.mp3").toURI().toString());
+        carMedia.setCycleCount(Timeline.INDEFINITE);
+        carMedia.setVolume(0.3);
+        carMedia.play();
 
         // Debug why button must be present for keyboard input to work
         Button button = new Button("Start");

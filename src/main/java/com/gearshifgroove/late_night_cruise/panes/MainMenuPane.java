@@ -14,6 +14,7 @@ import com.gearshifgroove.late_night_cruise.panes.Store.Data.Songs;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.DB;
 //import com.gearshifgroove.late_night_cruise.CustomUIElements.CustomButton;
 
+import com.gearshifgroove.late_night_cruise.scenes.SettingsScene;
 import com.gearshifgroove.late_night_cruise.scenes.StoreScene;
 import javafx.animation.*;
 import javafx.geometry.Pos;
@@ -104,10 +105,12 @@ public class MainMenuPane extends BorderPane {
         store.setOnAction(event -> {
             LateNightCruise.mainStage.setScene(new StoreScene());
             GlobalPlayer.stopMedia();
+            StorePane.mediaControl.setImage(StorePane.play);
         });
 
         settings.setOnAction(e->{
-            LateNightCruise.mainStage.setScene(new ItemShopScene());
+//            LateNightCruise.mainStage.setScene(new ItemShopScene());
+            LateNightCruise.mainStage.setScene(new SettingsScene());
             GlobalPlayer.stopMedia();
         });
 

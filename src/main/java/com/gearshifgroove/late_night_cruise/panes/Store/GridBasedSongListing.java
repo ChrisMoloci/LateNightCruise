@@ -69,7 +69,13 @@ public class GridBasedSongListing extends VBox {
         }
 
         playButton.setOnAction(e -> {
-            GlobalPlayer.changeSong(song.getMedia());
+            if (GlobalPlayer.getAudioMuteState()) {
+                GlobalPlayer.changeAudioMuteState(false);
+                GlobalPlayer.changeSong(song.getMedia());
+                GlobalPlayer.changeAudioMuteState(true);
+            } else {
+                GlobalPlayer.changeSong(song.getMedia());
+            }
         });
 
         System.out.println(songOwned);

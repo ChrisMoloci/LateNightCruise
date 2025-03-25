@@ -82,18 +82,18 @@ public class StorePane extends BorderPane {
         playlistsButton.setMinWidth(sideMenu.getMinWidth());
         playlistsButton.setMaxWidth(sideMenu.getMinWidth());
 
-        Button debug = new Button("Debug");
-        debug.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), CornerRadii.EMPTY, Insets.EMPTY)));
-        debug.setTextFill(Color.WHITE);
-        debug.setMinWidth(sideMenu.getMinWidth());
-        debug.setMaxWidth(sideMenu.getMinWidth());
+        Button songLibrary = new Button("Your Songs");
+        songLibrary.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), CornerRadii.EMPTY, Insets.EMPTY)));
+        songLibrary.setTextFill(Color.WHITE);
+        songLibrary.setMinWidth(sideMenu.getMinWidth());
+        songLibrary.setMaxWidth(sideMenu.getMinWidth());
 
         sideMenu.getChildren().addAll(
                 menuAndCoinCount, new PaddingBox(10, 0),
                 store, new PaddingBox(10, 0),
                 search, new PaddingBox(10, 0),
                 home, genres, artists, songs, new PaddingBox(30, 0),
-                playlistsButton, debug);
+                playlistsButton, songLibrary);
 
         // Main Content
         displayPane = new Pane(new Home());
@@ -129,7 +129,12 @@ public class StorePane extends BorderPane {
            displayPane.getChildren().add(new Playlists());
         });
 
-//        debug.setOnAction(e -> {
+        songLibrary.setOnAction(e -> {
+            displayPane.getChildren().clear();
+            displayPane.getChildren().add(new OwnedSongsView());
+        });
+
+//        songLibrary.setOnAction(e -> {
 //            displayPane.getChildren().clear();
 //            displayPane.getChildren().add(new AddToPlaylistView());
 //        });

@@ -67,6 +67,7 @@ public class GamePane extends StackPane {
         terrainTile1 = new Tile(0, 0, 0, 3, terrainImage);
         terrainTile2 = new Tile(0, 1080, 0, 3, terrainImage);
         car = new Player(883, 490, carImage);
+        car.setCoinCount(ScoreSystem.getStoredScore());
 
 
 
@@ -143,7 +144,7 @@ public class GamePane extends StackPane {
 
 
         /// Possible lanes
-        int[] lanes = {800,900,1000,1050};
+        int[] lanes = {795,883,971,1059};
         /// Randomly choose one lane
         return lanes[rand.nextInt(lanes.length)];
         //return rand.nextInt(maxX-minX + 1) + minX;
@@ -259,7 +260,9 @@ public class GamePane extends StackPane {
             /// Check for the Collision with the car.
             if (Math.abs(car.getxCoord() - coin.getxCoord())<30 && Math.abs(car.getyCoord()-coin.getyCoord())<30){
                 /// Getting the points by 1
-                car.setCoinCount(car.getCoinCount()+1);
+                ScoreSystem.updateStoredScore(ScoreSystem.getStoredScore() + 1);
+                car.setCoinCount(ScoreSystem.getStoredScore());
+//                car.setCoinCount(car.getCoinCount()+1);
                 /// Here were removing it from the list
                 coins.remove(coin);
                 collectedCoins.add(coin);
@@ -346,7 +349,7 @@ public class GamePane extends StackPane {
     private void resetGame() {
         // Reset all game variables
         gasLevel = 100.0;
-        car.setCoinCount(0);
+//        car.setCoinCount(ScoreSystem.getStoredScore());
         car.setGasCount(0);
         coins.clear();
         fuels.clear();

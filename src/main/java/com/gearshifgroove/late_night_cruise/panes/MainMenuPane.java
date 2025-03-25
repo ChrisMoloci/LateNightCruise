@@ -64,6 +64,8 @@ public class MainMenuPane extends BorderPane {
 //
 //        this.setCenter(buttons);
 //        Pane root = new Pane();
+        GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0001").getMedia());
+
         this.setStyle("-fx-background-color: linear-gradient(to bottom, #ff00ff, #0000ff, #001f3f);"); // Vibrant neon background
 //        this.setBackground(new Background(new BackgroundFill(new LinearGradient(to bottom, #ff00ff, #0000ff, #001f3f))));
 

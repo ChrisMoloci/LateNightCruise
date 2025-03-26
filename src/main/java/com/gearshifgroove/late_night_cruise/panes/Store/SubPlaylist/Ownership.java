@@ -35,4 +35,17 @@ public class Ownership {
             e.printStackTrace();
         }
     }
+
+    public static boolean checkOwnership(String song) {
+        boolean status = false;
+        for (String songToCheck : ownedSongs) {
+            if (song.equals(songToCheck)) {
+                status = true;
+                break;
+            } else {
+                status = false;
+            }
+        }
+        return status;
+    }
 }

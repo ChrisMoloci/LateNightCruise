@@ -18,9 +18,9 @@ public class ArtistListing extends GridPane {
         this.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, new CornerRadii(10), null, new Insets(3, 5, 3, 5))));
 
         ColumnConstraints artistInfo = new ColumnConstraints();
-        artistInfo.setPercentWidth(90);
+        artistInfo.setPercentWidth(92);
         ColumnConstraints artistSelect = new ColumnConstraints();
-        artistSelect.setPercentWidth(10);
+        artistSelect.setPercentWidth(8);
 
         this.getColumnConstraints().addAll(artistInfo, artistSelect);
 

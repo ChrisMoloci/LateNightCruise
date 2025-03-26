@@ -4,6 +4,7 @@ import com.gearshifgroove.late_night_cruise.Const;
 import com.gearshifgroove.late_night_cruise.GlobalPlayer;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Playlist;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Song;
+import com.gearshifgroove.late_night_cruise.panes.StorePane;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
@@ -28,19 +29,27 @@ public class PlaylistListing extends GridPane {
 //        this.add(new Button("Play Now"), 0, 0);
 //        this.add(new Text("Playlist"), 1, 1);
 
-        ColumnConstraints play = new ColumnConstraints();
-        play.setPercentWidth(20);
+        ColumnConstraints select = new ColumnConstraints();
+        select.setPercentWidth(20);
         ColumnConstraints playlistInfo = new ColumnConstraints();
-        playlistInfo.setPercentWidth(80);
+        playlistInfo.setPercentWidth(72);
+        ColumnConstraints view = new ColumnConstraints();
+        view.setPercentWidth(8);
 
-        this.getColumnConstraints().addAll(play, playlistInfo);
+        this.getColumnConstraints().addAll(select, playlistInfo, view);
 
         Button selectButton = new Button("Select Playlist");
-        selectButton.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+        selectButton.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, new CornerRadii(25), null, new Insets(3, 0, 3, 3))));
+        selectButton.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(25), null)));
         selectButton.setTextFill(Color.WHITE);
 
         Text playlistName = new Text(playlist.getName());
         playlistName.setFill(Color.WHITE);
+
+        Button viewButton = new Button(">");
+        viewButton.setBorder(new Border(new BorderStroke(Color.WHITE, BorderStrokeStyle.SOLID, new CornerRadii(25), null, new Insets(3, 0, 3, 3))));
+        viewButton.setBackground(new Background(new BackgroundFill(Color.BLACK, new CornerRadii(25), null)));
+        viewButton.setTextFill(Color.WHITE);
 
         selectButton.setOnAction(e -> {
             System.out.println("Songs in playlist: ");
@@ -58,14 +67,15 @@ public class PlaylistListing extends GridPane {
                 exception.printStackTrace();
             }
         });
-//        Text artistName = new Text("Artist: ");
 
-//        playButton.setOnAction(e -> {
-//            GlobalPlayer.changeSong(song.getMedia());
-//        });
+        viewButton.setOnAction(e -> {
+            StorePane.displayPane.getChildren().clear();
+            StorePane.displayPane.getChildren().add(new PlaylistSongs(playlist.getSongs()));
+        });
 
         this.add(selectButton, 0, 0, 1, 1);
         this.add(playlistName, 1, 0);
+        this.add(viewButton, 2, 0, 1, 1);
 //        this.add(artistName, 1, 1);
 //        this.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH/4);
 

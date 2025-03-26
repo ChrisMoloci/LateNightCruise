@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -70,7 +71,8 @@ public class StorePane extends BorderPane {
         store.setFont(Font.font("Arial", FontWeight.BOLD, 30));
         store.setFill(Color.WHITE);
 
-        TextField search = new TextField("Search...");
+        TextField search = new TextField();
+        search.setPromptText("Search...");
         search.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), null, null)));
 
         Button home = new Button("Home");
@@ -140,6 +142,12 @@ public class StorePane extends BorderPane {
             LateNightCruise.mainStage.setScene(new MainMenuScene());
         });
 
+        search.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                displayPane.getChildren().clear();
+                displayPane.getChildren().add(new SearchResult(search.getText()));
+            }
+        });
 
         home.setOnAction(e -> {
             displayPane.getChildren().clear();
@@ -158,7 +166,7 @@ public class StorePane extends BorderPane {
 
         songs.setOnAction(e -> {
             displayPane.getChildren().clear();
-            displayPane.getChildren().add(new TopSongs());
+            displayPane.getChildren().add(new AllSongs());
         });
 
         playlistsButton.setOnAction(e -> {

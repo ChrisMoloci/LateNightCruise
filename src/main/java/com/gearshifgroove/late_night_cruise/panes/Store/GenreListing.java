@@ -19,9 +19,11 @@ import java.util.ArrayList;
 
 public class GenreListing extends GridPane {
     private ArrayList<Song> filteredSongs;
+    private Genre genre;
 
     public GenreListing(Genre genre) {
         filteredSongs = new ArrayList<>();
+        this.genre = genre;
 
         for (Artist artist : DB.getArtists().values()) {
             for (Song song : artist.getSongs()) {
@@ -36,9 +38,9 @@ public class GenreListing extends GridPane {
         this.setPadding(new Insets(10, 0, 10, 10));
 
         ColumnConstraints artistInfo = new ColumnConstraints();
-        artistInfo.setPercentWidth(90);
+        artistInfo.setPercentWidth(92);
         ColumnConstraints artistSelect = new ColumnConstraints();
-        artistSelect.setPercentWidth(10);
+        artistSelect.setPercentWidth(8);
 
         this.getColumnConstraints().addAll(artistInfo, artistSelect);
 
@@ -62,5 +64,8 @@ public class GenreListing extends GridPane {
 
         this.setMinWidth((Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4) - 18);
         this.setMaxWidth((Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4) - 18);
+    }
+    public Genre getGenre() {
+        return genre;
     }
 }

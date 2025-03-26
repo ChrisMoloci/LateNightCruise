@@ -5,20 +5,14 @@ import com.gearshifgroove.late_night_cruise.panes.Store.Data.Artist;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.DB;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Song;
 import com.gearshifgroove.late_night_cruise.panes.Store.SubPlaylist.Ownership;
-import javafx.collections.FXCollections;
-import javafx.geometry.Insets;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
 
-public class TopSongs extends ScrollPane {
-    public TopSongs() {
+public class AllSongs extends ScrollPane {
+    public AllSongs() {
         VBox topSongsBox = new VBox();
 
         ArrayList<String> ownedSongs = Ownership.getOwnedSongs();

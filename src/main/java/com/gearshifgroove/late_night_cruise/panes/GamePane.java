@@ -36,7 +36,7 @@ import java.io.File;
 
 
 public class GamePane extends StackPane {
-    AudioClip carMedia;
+    public static AudioClip carMedia;
     private Image terrainImage;
     private Image carImage;
     private Tile terrainTile1;
@@ -73,9 +73,9 @@ public class GamePane extends StackPane {
         car = new Player(883, 490, carImage);
         car.setCoinCount(ScoreSystem.getStoredScore());
 
-        carMedia = new AudioClip(new File("src/main/resources/com/gearshifgroove/late_night_cruise/carSound.mp3").toURI().toString());
-        carMedia.setCycleCount(Timeline.INDEFINITE);
-        carMedia.setVolume(0.3);
+        carMedia = new AudioClip(new File("src/main/resources/com/gearshifgroove/late_night_cruise/carSound.wav").toURI().toString());
+        carMedia.setCycleCount(AudioClip.INDEFINITE);
+        carMedia.setVolume(0.1);
         carMedia.play();
 
         // Debug why button must be present for keyboard input to work

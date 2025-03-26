@@ -2,13 +2,22 @@ package com.gearshifgroove.late_night_cruise.panes.Store.Data;
 
 import java.util.HashMap;
 
+// Author(s): Christian Moloci
+
+// Not for instantiation
+// Sets up a hashmap to serve as the music Database
 public class DB {
+    // Create an artists hashmap
     private static HashMap<String, Artist> artists = new HashMap<>();
+    // create a demo playlist for if the user has no playlist selected/created (typically for first time users)
     public static Playlist demoPlaylist;
 
+    // Initialise the Database by adding all the data to the Hashmap when the program is run
     static {
+        // Initialise artists HashMap
         artists = new HashMap<>();
 
+        // try adding the data and return an error if failed
         try {
             artists.put("0000", new Artist("Unknown", "0000"));
             artists.get("0000").addSong(new Song("0004", "Commercial", "Calm Corporate", artists.get("0000").getName()));
@@ -69,10 +78,12 @@ public class DB {
             artists.get("0012").addSong(new Song("0015", "Emotional", "Whispers of Peaceful Serenade", artists.get("0012").getName()));
 
         } catch (Exception e) {
+            // If an error occurs, log it
             System.out.println("An error occured while initilizing music database");
             e.printStackTrace();
         }
 
+        // Create the demo playlist and add 4 songs from the artist DB to it
         demoPlaylist = new Playlist(0, "Late Night Cruise");
         demoPlaylist.addSong(artists.get("0001").getSong("0018"));
         demoPlaylist.addSong(artists.get("0005").getSong("0007"));
@@ -80,6 +91,7 @@ public class DB {
         demoPlaylist.addSong(artists.get("0001").getSong("0022"));
     }
 
+    // Getter for the DB
     public static HashMap<String, Artist> getArtists() {
         return artists;
     }

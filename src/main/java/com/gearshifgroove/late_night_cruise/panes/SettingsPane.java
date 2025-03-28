@@ -1,10 +1,10 @@
-package com.gearshifgroove.late_night_cruise.panes.Store;
+package com.gearshifgroove.late_night_cruise.panes;
 
 import com.gearshifgroove.late_night_cruise.CustomUIElements.CustomButton;
 import com.gearshifgroove.late_night_cruise.Const;
 import com.gearshifgroove.late_night_cruise.GlobalPlayer;
 import com.gearshifgroove.late_night_cruise.LateNightCruise;
-import com.gearshifgroove.late_night_cruise.panes.CreditsPane;
+import com.gearshifgroove.late_night_cruise.scenes.CreditScene;
 import com.gearshifgroove.late_night_cruise.scenes.MainMenuScene;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,6 +27,7 @@ public class SettingsPane extends BorderPane {
     private CustomButton creditsButton;
 
     public SettingsPane() {
+        LateNightCruise.mainStage.setTitle("Settings");
         setupBackground();
         setupUI();
         setupActions();
@@ -56,7 +57,7 @@ public class SettingsPane extends BorderPane {
                 BUTTON_FONT,
                 BUTTON_WIDTH, BUTTON_HEIGHT,
                 Color.LIGHTGRAY,
-                Color.WHITE
+                Color.BLACK
         );
 
         muteButton = new CustomButton(
@@ -93,9 +94,8 @@ public class SettingsPane extends BorderPane {
         });
 
         creditsButton.setOnAction(e -> {
-            CreditsPane credits = new CreditsPane();
-            Scene creditsScene = new Scene(credits, Const.WINDOW_WIDTH, Const.WINDOW_HEIGHT);
-            LateNightCruise.mainStage.setScene(creditsScene);
+            LateNightCruise.mainStage.setScene(new CreditScene());
+            LateNightCruise.mainStage.setFullScreen(true);
         });
     }
 }

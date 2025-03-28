@@ -1,6 +1,7 @@
 package com.gearshifgroove.late_night_cruise.panes;
 
 import com.gearshifgroove.late_night_cruise.*;
+import com.gearshifgroove.late_night_cruise.CustomUIElements.CustomButton;
 import com.gearshifgroove.late_night_cruise.scenes.GameScene;
 import com.gearshifgroove.late_night_cruise.scenes.MainMenuScene;
 import javafx.animation.Animation;
@@ -36,7 +37,7 @@ import java.io.File;
 
 
 public class GamePane extends StackPane {
-    public static AudioClip carMedia;
+//    public static AudioClip carMedia;
     private Image terrainImage;
     private Image carImage;
     private Tile terrainTile1;
@@ -65,6 +66,7 @@ public class GamePane extends StackPane {
     /// Creating gas level
     private double gasLevel = 99.9;
     public GamePane() {
+        LateNightCruise.mainStage.setTitle("Late Night Cruise");
         System.out.println("Game Started");
         terrainImage = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/track.png"));
         carImage = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/car.png"));
@@ -75,10 +77,11 @@ public class GamePane extends StackPane {
         car = new Player(883, 490, carImage);
         car.setCoinCount(ScoreSystem.getStoredScore());
 
-        carMedia = new AudioClip(new File("src/main/resources/com/gearshifgroove/late_night_cruise/carSound.wav").toURI().toString());
-        carMedia.setCycleCount(AudioClip.INDEFINITE);
-        carMedia.setVolume(0.1);
-        carMedia.play();
+        // Car sound
+//        carMedia = new AudioClip(new File("src/main/resources/com/gearshifgroove/late_night_cruise/carSound.wav").toURI().toString());
+//        carMedia.setCycleCount(AudioClip.INDEFINITE);
+//        carMedia.setVolume(0.1);
+//        carMedia.play();
 
         // Debug why button must be present for keyboard input to work
         Button button = new Button("Start");
@@ -93,7 +96,7 @@ public class GamePane extends StackPane {
         canvas.requestFocus();
 
         this.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ESCAPE){
+            if (event.getCode() == KeyCode.BACK_SPACE){
                 hitPause();
             }
 
@@ -152,7 +155,8 @@ public class GamePane extends StackPane {
     /// This will generate a random lane for the coin or fuel
     private int getRandomLane(){
         /// Possible lanes
-        int[] lanes = {800,900,982,1068};
+//        int[] lanes = {800,900,982,1068};
+        int[] lanes = {819,907,995,1083};
         /// Randomly choose one lane
         return lanes[rand.nextInt(lanes.length)];
         //return rand.nextInt(maxX-minX + 1) + minX;
@@ -280,7 +284,7 @@ public class GamePane extends StackPane {
         }
 
         /// Round the gas level
-        double roundedGasLevel = Math.round(gasLevel * 100.0) /100.0;
+        int roundedGasLevel = (int) Math.floor(gasLevel);
         if (gasLevel <= 0){
             gasLevel =0;
             System.out.println("Game Over!");
@@ -302,16 +306,18 @@ public class GamePane extends StackPane {
                 buttonsLayout.setAlignment(Pos.CENTER);
                 buttonsLayout.setSpacing(20);
 
-                unpauseButton = new Button("Unpause");
+//                unpauseButton = new Button("Unpause");
+                unpauseButton = new CustomButton("Resume", Font.font("Arial", FontWeight.BOLD, 20), 150, 60, Color.rgb(0, 112, 40), Color.WHITE);
                 unpauseButton.setOnAction(e->hitPause());
-                unpauseButton.setFont(Font.font("Arial", FontWeight.BOLD,20));
-                unpauseButton.setTextFill(Color.WHITE);
+//                unpauseButton.setFont(Font.font("Arial", FontWeight.BOLD,20));
+//                unpauseButton.setTextFill(Color.WHITE);
                 buttonsLayout.getChildren().add(unpauseButton);
 
-                mainMenuButton = new Button("Main Menu");
+//                mainMenuButton = new Button("Main Menu");
+                mainMenuButton = new CustomButton("Main Menu", Font.font("Arial", FontWeight.BOLD, 20), 150, 60, Color.rgb(250, 250, 250), Color.BLACK);
                 mainMenuButton.setOnAction(e->goToMainMenu());
-                mainMenuButton.setFont(Font.font("Arial",FontWeight.BOLD,20));
-                mainMenuButton.setTextFill(Color.WHITE);
+//                mainMenuButton.setFont(Font.font("Arial",FontWeight.BOLD,20));
+//                mainMenuButton.setTextFill(Color.WHITE);
                 buttonsLayout.getChildren().add(mainMenuButton);
 
                 this.getChildren().add(buttonsLayout);
@@ -330,7 +336,8 @@ public class GamePane extends StackPane {
         if (gameOverText == null) {
             gameOverText = new Text("Game Over!");
             gameOverText.setFont(Font.font(60));
-            gameOverText.setFont(Font.font("Arial", FontWeight.BOLD,20));
+            gameOverText.setFont(Font.font("Arial", FontWeight.BOLD,50));
+            gameOverText.setFill(Color.WHITE);
             gameOverText.setX(Const.WINDOW_WIDTH / 2 - 100);
             gameOverText.setTranslateY(Const.WINDOW_HEIGHT/2-400);
             //gameOverText.setY(Const.WINDOW_HEIGHT / 2 - 400);
@@ -343,24 +350,26 @@ public class GamePane extends StackPane {
             buttonsLayout.setSpacing(20);
 
             // Play Again Button
-            Button playAgainButton = new Button("Play Again");
+//            Button playAgainButton = new Button("Play Again");
+            Button playAgainButton = new CustomButton("Play Again", Font.font("Arial", FontWeight.BOLD, 20), 150, 60, Color.rgb(0, 112, 40), Color.WHITE);
             playAgainButton.setOnAction(e -> {
                 resetGame();
             });
-            playAgainButton.setTextFill(Color.WHITE);
-            playAgainButton.setFont(Font.font(60));
-            playAgainButton.setFont(Font.font("Arial", FontWeight.BOLD,20));
+//            playAgainButton.setTextFill(Color.WHITE);
+//            playAgainButton.setFont(Font.font(60));
+//            playAgainButton.setFont(Font.font("Arial", FontWeight.BOLD,20));
             buttonsLayout.getChildren().add(playAgainButton);
 
 
 
 
             // Main Menu Button
-            Button mainMenuButton = new Button("Main Menu");
+//            Button mainMenuButton = new Button("Main Menu");
+            Button mainMenuButton = new CustomButton("Main Menu", Font.font("Arial", FontWeight.BOLD, 20), 150, 60, Color.rgb(250, 250, 250), Color.BLACK);
             mainMenuButton.setOnAction(e -> goToMainMenu());
-            mainMenuButton.setFont(Font.font(60));
-            mainMenuButton.setFont(Font.font("Arial",FontWeight.BOLD,20));
-            mainMenuButton.setTextFill(Color.WHITE);
+//            mainMenuButton.setFont(Font.font(60));
+//            mainMenuButton.setFont(Font.font("Arial",FontWeight.BOLD,20));
+//            mainMenuButton.setTextFill(Color.WHITE);
             buttonsLayout.getChildren().add(mainMenuButton);
 
             this.getChildren().add(buttonsLayout);
@@ -402,13 +411,13 @@ public class GamePane extends StackPane {
 
     private void drawScoreBox(GraphicsContext gc, double roundedGasLevel){
         double boxWidth = 150;
-        double boxHeight=90;
+        double boxHeight = 84;
 
         double boxX = Const.WINDOW_WIDTH - boxWidth + 800;
         double boxY = 100;
 
         gc.setFill(Color.BLACK);
-        gc.fillRect(boxX,boxY, boxWidth, boxHeight);
+        gc.fillRect(boxX, boxY, boxWidth, boxHeight);
 
         gc.setFill(Color.WHITE);
 
@@ -417,8 +426,8 @@ public class GamePane extends StackPane {
         gc.fillText("Coin: "+ car.getCoinCount(),boxX + 10, boxY + 30);
         //gc.fillText("Gas: " + car.getGasCount(), boxX + 10, boxY + 50);
 
-        String formattedGasLevel = String.format("%.2f", roundedGasLevel);
-        gc.fillText("gas Level:" + Math.round(roundedGasLevel), boxX + 10, boxY + 70);
+//        String formattedGasLevel = String.format("%.2f", roundedGasLevel);
+        gc.fillText("gas Level:" + Math.round(roundedGasLevel), boxX + 10, boxY + 60);
     }
 }
 

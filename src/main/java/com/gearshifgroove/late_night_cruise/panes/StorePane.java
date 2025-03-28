@@ -34,6 +34,7 @@ public class StorePane extends BorderPane {
     }
 
     public StorePane() {
+        LateNightCruise.mainStage.setTitle("Store");
         this.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 
 //        play = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/play.png"), 35, 35, true, true);

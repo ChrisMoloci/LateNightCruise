@@ -32,6 +32,7 @@ import javafx.util.Duration;
 
 public class MainMenuPane extends StackPane {
     public MainMenuPane() {
+        LateNightCruise.mainStage.setTitle("Main Menu");
         GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0001").getMedia());
 
         // Setup responsive background
@@ -93,10 +94,13 @@ public class MainMenuPane extends StackPane {
         CustomButton play = createButton("Play", Color.RED);
         CustomButton store = createButton("Store", Color.ORANGE);
         CustomButton settings = createButton("Settings", Color.LIGHTGRAY);
+        settings.setTextFill(Color.BLACK);
 
         // Button actions
         play.setOnAction(event -> {
             LateNightCruise.mainStage.setScene(new GameScene());
+            LateNightCruise.mainStage.setFullScreen(true);
+            LateNightCruise.mainStage.setFullScreenExitHint(null);
             // Stop the global player (It's still playing the home menu music)
             GlobalPlayer.player.stop();
 //            GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0002").getMedia());

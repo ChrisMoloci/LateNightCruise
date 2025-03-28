@@ -53,10 +53,12 @@ public class GamePane extends StackPane {
     private GraphicsContext gc;
 
     private Text gameOverText;
+    private Button unpauseButton;
+    private Button mainMenuButton;
     private VBox buttonsLayout;
     private boolean isGameOver = false;
     private boolean isPaused= false;
-    private Button pauseButton;
+    private VBox pauseMenu;
 
     /// Creating gas level
     private double gasLevel = 99.9;
@@ -84,12 +86,13 @@ public class GamePane extends StackPane {
         canvas.requestFocus();
 
         this.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.PAUSE || event.getCode() == KeyCode.ESCAPE){
+            if (event.getCode() == KeyCode.ESCAPE){
                 hitPause();
             }
 
             if (isPaused){
-                isPaused = false;
+                // If the game is paused, ignore other key event
+                return;
             }
 
 //            System.out.println(event.getCode());
@@ -154,11 +157,6 @@ public class GamePane extends StackPane {
             return;
         }
 
-        if (isPaused){
-            showPausedMessage();
-            return;
-        }
-
         int key = rand.nextInt(100);
 
         if (key == 0) {
@@ -208,77 +206,62 @@ public class GamePane extends StackPane {
         /// Random number 1 and 1000
         int randNum = rand.nextInt(1000) +1;
         /// Random number between 1 and 2
-        int randTime = rand.nextInt(2)+1;
+        int spawnType = rand.nextInt(2)+1;
 
             /// If both numbers match spawn a coin or fuel
-        if (randNum >= 995 && randTime==2){
-            /// random number between 1-2
-            int spawnType = rand.nextInt(2)+1;
+        if (randNum >= 995){
             int randomLane = getRandomLane();
-
-            /// If it's 1
             if (spawnType==1){
-                /// Here were just creating a new coin at the top,
-                ///-50 is used so the coin is above the visible area
                 Coin newCoin = new Coin(randomLane,-50,coinImage);
-                /// Add to the coin list
                 coins.add(newCoin);
-
-                /// If it's 2
-            } else if (spawnType==2) {
+            }
+            else if (spawnType==2) {
                 Fuel newFuel = new Fuel(randomLane,-50,fuelImage);
                 fuels.add(newFuel);
             }
         }
 
-        List<Coin> collectedCoins = new ArrayList<>();
-        for(Coin coin:  coins){
+        for(int i=0; i<coins.size(); i++){
+            Coin coin = coins.get(i);
             /// Moving it downwards by 2 pixels per frame
             coin.setyCoord(coin.getyCoord()+2);
 
             /// Check if the coin has moved off the screen, if y is greater than 1080, which is the bottom
             if (coin.getyCoord()>1080){
-                /// Reset y to -50
-                coin.setyCoord(-50);
-                /// Randomly place the coin in one of the four lanes
-                coin.setxCoord(getRandomLane());
+                coins.remove(i);
         }
 
-            gc.drawImage(coin.getImage(),coin.getxCoord(),coin.getyCoord());
-            /// Check for the Collision with the car.
             if (Math.abs(car.getxCoord() - coin.getxCoord())<30 && Math.abs(car.getyCoord()-coin.getyCoord())<30){
-                /// Getting the points by 1
                 ScoreSystem.updateStoredScore(ScoreSystem.getStoredScore() + 1);
                 car.setCoinCount(ScoreSystem.getStoredScore());
 //                car.setCoinCount(car.getCoinCount()+1);
-                /// Here were removing it from the list
-                coins.remove(coin);
-                collectedCoins.add(coin);
+                coins.remove(i);
+                //i--;
             }
+
+            gc.drawImage(coin.getImage(),coin.getxCoord(),coin.getyCoord());
         }
 
-        List<Fuel> collectedFuels = new ArrayList<>();
-        for (Fuel fuel: fuels){
+        for (int i=0; i<fuels.size(); i++){
+            Fuel fuel = fuels.get(i);
             fuel.setyCoord(fuel.getyCoord() + 2);
 
             /// Check if the fuel reaches bottom or collected
             if (fuel.getyCoord()>1080){
-                fuel.setyCoord(-50);
-                fuel.setxCoord(getRandomLane());
+                fuels.remove(i);
             }
-            gc.drawImage(fuel.getImage(),fuel.getxCoord(), fuel.getyCoord());
 
             if (Math.abs(car.getxCoord() - fuel.getxCoord())<30 && Math.abs(car.getyCoord() - fuel.getyCoord())<30){
                 car.setGasCount(car.getGasCount()+1);
-                fuels.remove(fuel);
-                collectedFuels.add(fuel);
-
                 gasLevel += 5;
                 if (gasLevel > 100){
                     gasLevel =100;
                 }
+                fuels.remove(i);
+                //i--;
 
             }
+            gc.drawImage(fuel.getImage(),fuel.getxCoord(), fuel.getyCoord());
 
         }
 
@@ -299,37 +282,42 @@ public class GamePane extends StackPane {
 
     }
 
+
+
     private void hitPause(){
         isPaused = !isPaused;
 
         if (isPaused){
             timeline.pause();
-            showPausedMessage();
+
+            if (buttonsLayout == null){
+                buttonsLayout = new VBox(10);
+                buttonsLayout.setAlignment(Pos.CENTER);
+                buttonsLayout.setSpacing(20);
+
+                unpauseButton = new Button("Unpause");
+                unpauseButton.setOnAction(e->hitPause());
+                unpauseButton.setFont(Font.font("Arial", FontWeight.BOLD,20));
+                unpauseButton.setTextFill(Color.WHITE);
+                buttonsLayout.getChildren().add(unpauseButton);
+
+                mainMenuButton = new Button("Main Menu");
+                mainMenuButton.setOnAction(e->goToMainMenu());
+                mainMenuButton.setFont(Font.font("Arial",FontWeight.BOLD,20));
+                mainMenuButton.setTextFill(Color.WHITE);
+                buttonsLayout.getChildren().add(mainMenuButton);
+
+                this.getChildren().add(buttonsLayout);
+            }
         }else{
             timeline.play();
-            removePauseMessage();
+            if (buttonsLayout != null){
+                this.getChildren().remove(buttonsLayout);
+                buttonsLayout = null;
+            }
         }
     }
 
-    private void showPausedMessage( ){
-        if (pauseButton == null){
-            pauseButton = new Button("Go");
-            pauseButton.setFont(Font.font(60));
-            pauseButton.setFont(Font.font("Arial", FontWeight.BOLD,20));
-            pauseButton.setTextFill(Color.RED);
-            pauseButton.setLayoutX(Const.WINDOW_WIDTH /2-100);
-            pauseButton.setLayoutY(Const.WINDOW_HEIGHT/2-100);
-            pauseButton.setOnMouseClicked(mouseEvent -> hitPause());
-            this.getChildren().add(pauseButton);
-        }
-    }
-
-    private void removePauseMessage(){
-        if (pauseButton != null){
-            this.getChildren().remove(pauseButton);
-            pauseButton = null;
-        }
-    }
 
     private void showGameOverScreen(GraphicsContext gc) {
         if (gameOverText == null) {
@@ -337,7 +325,8 @@ public class GamePane extends StackPane {
             gameOverText.setFont(Font.font(60));
             gameOverText.setFont(Font.font("Arial", FontWeight.BOLD,20));
             gameOverText.setX(Const.WINDOW_WIDTH / 2 - 100);
-            gameOverText.setY(Const.WINDOW_HEIGHT / 2 - 100);
+            gameOverText.setTranslateY(Const.WINDOW_HEIGHT/2-400);
+            //gameOverText.setY(Const.WINDOW_HEIGHT / 2 - 400);
             this.getChildren().add(gameOverText);
         }
 
@@ -356,6 +345,9 @@ public class GamePane extends StackPane {
             playAgainButton.setFont(Font.font("Arial", FontWeight.BOLD,20));
             buttonsLayout.getChildren().add(playAgainButton);
 
+
+
+
             // Main Menu Button
             Button mainMenuButton = new Button("Main Menu");
             mainMenuButton.setOnAction(e -> goToMainMenu());
@@ -363,9 +355,15 @@ public class GamePane extends StackPane {
             mainMenuButton.setFont(Font.font("Arial",FontWeight.BOLD,20));
             mainMenuButton.setTextFill(Color.WHITE);
             buttonsLayout.getChildren().add(mainMenuButton);
-            this.getChildren().add(buttonsLayout);  // Add buttons to the pane
+
+            this.getChildren().add(buttonsLayout);
+
+
         }
+
     }
+
+
 
     private void resetGame() {
         // Reset all game variables
@@ -396,23 +394,24 @@ public class GamePane extends StackPane {
     }
 
     private void drawScoreBox(GraphicsContext gc, double roundedGasLevel){
-        ///  Coin box
+        double boxWidth = 150;
+        double boxHeight=90;
+
+        double boxX = Const.WINDOW_WIDTH - boxWidth + 800;
+        double boxY = 100;
+
         gc.setFill(Color.BLACK);
+        gc.fillRect(boxX,boxY, boxWidth, boxHeight);
 
-        ///THis would be the box
-        gc.fillRect(Const.WINDOW_WIDTH-150,300,120,50);
         gc.setFill(Color.WHITE);
-        gc.fillText("Coins: " + car.getCoinCount(),Const.WINDOW_WIDTH -140,330);
 
-        /// Gas Box
-        gc.setFill(Color.BLACK);
+        gc.setFont(Font.font("Arial",FontWeight.BOLD,14));
 
-        ///THis would be the box
-        gc.fillRect(Const.WINDOW_WIDTH-150,200,120,50);
-        gc.setFill(Color.WHITE);
-        gc.fillText("Gas: "+ car.getGasCount(),Const.WINDOW_WIDTH -140,230);
+        gc.fillText("Coin: "+ car.getCoinCount(),boxX + 10, boxY + 30);
+        //gc.fillText("Gas: " + car.getGasCount(), boxX + 10, boxY + 50);
+
         String formattedGasLevel = String.format("%.2f", roundedGasLevel);
-        gc.fillText("gas Level:" + roundedGasLevel, Const.WINDOW_WIDTH -140,250);
+        gc.fillText("gas Level:" + Math.round(roundedGasLevel), boxX + 10, boxY + 70);
     }
 }
 

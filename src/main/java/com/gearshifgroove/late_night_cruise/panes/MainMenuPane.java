@@ -4,6 +4,9 @@ import com.gearshifgroove.late_night_cruise.CustomUIElements.CustomButton;
 import com.gearshifgroove.late_night_cruise.CustomUIElements.PaddingBox;
 import com.gearshifgroove.late_night_cruise.GlobalPlayer;
 import com.gearshifgroove.late_night_cruise.LateNightCruise;
+import com.gearshifgroove.late_night_cruise.ScoreSystem;
+import com.gearshifgroove.late_night_cruise.scenes.*;
+import com.gearshifgroove.late_night_cruise.panes.Store.Data.*;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Playlist;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.UserLib;
 import com.gearshifgroove.late_night_cruise.scenes.GameScene;
@@ -13,7 +16,11 @@ import com.gearshifgroove.late_night_cruise.panes.Store.Data.DB;
 import com.gearshifgroove.late_night_cruise.scenes.SettingsScene;
 import com.gearshifgroove.late_night_cruise.scenes.StoreScene;
 import javafx.animation.*;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -23,73 +30,71 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-public class MainMenuPane extends BorderPane {
+public class MainMenuPane extends StackPane {
     public MainMenuPane() {
-////        ScoreSystem.updateStoredScore(10);
-//        System.out.println(ScoreSystem.getStoredScore());
-//        GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0001").getMedia());
-//
-//        VBox buttons = new VBox();
-//
-//        Button playButton = new Button("Start");
-//        Button storeButton = new Button("Store");
-//        Button itemShopButton = new Button("Item Shop");
-//
-//        playButton.setOnAction(event -> {
-//            LateNightCruise.mainStage.setScene(new GameScene());
-////            GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0002").getMedia());
-//            GlobalPlayer.playPlaylist(GlobalPlayer.selectedPlaylist, 0);
-//        });
-//
-//        storeButton.setOnAction(event -> {
-//            LateNightCruise.mainStage.setScene(new StoreScene());
-//            GlobalPlayer.stopMedia();
-//        });
-//
-//        itemShopButton.setOnAction(e->{
-//            LateNightCruise.mainStage.setScene(new ItemShopScene());
-//            GlobalPlayer.stopMedia();
-//        });
-//
-//        buttons.getChildren().addAll(playButton, storeButton,itemShopButton);
-//        buttons.setAlignment(Pos.CENTER);
-//
-//        this.setCenter(buttons);
-//        Pane root = new Pane();
-
-        // Stop playing the car sound when back to the main menu from the GamePane
-        if (GamePane.carMedia != null) GamePane.carMedia.stop();
         GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0001").getMedia());
 
-        this.setStyle("-fx-background-color: linear-gradient(to bottom, #ff00ff, #0000ff, #001f3f);"); // Vibrant neon background
-//        this.setBackground(new Background(new BackgroundFill(new LinearGradient(to bottom, #ff00ff, #0000ff, #001f3f))));
+        // Setup responsive background
+        setStyle("-fx-background-color: linear-gradient(to bottom, #ff00ff, #0000ff, #001f3f);");
 
+        // Create responsive glow effect
+        Rectangle glow = createGlowEffect();
 
-        // Background neon glow effect
-        Rectangle glow = new Rectangle(1024, 768, Color.TRANSPARENT);
+        // Main content container
+        VBox mainContent = createMainContent();
+
+        // Setup animations
+        setupAnimations(mainContent, glow);
+
+        getChildren().addAll(glow, mainContent);
+    }
+
+    private Rectangle createGlowEffect() {
+        Rectangle glow = new Rectangle();
+        glow.setFill(Color.TRANSPARENT);
         glow.setStroke(Color.CYAN);
-        glow.setStrokeWidth(10);
-        glow.setEffect(new DropShadow(50, Color.BLUE));
+        glow.setStrokeWidth(8);  // Slightly reduced stroke width
+        glow.setEffect(new DropShadow(40, Color.BLUE));  // Smaller shadow
 
-        // Project
+        // Bind to parent size
+        glow.widthProperty().bind(widthProperty());
+        glow.heightProperty().bind(heightProperty());
+
+        return glow;
+    }
+
+    private VBox createMainContent() {
+        VBox content = new VBox(30);  // Reduced vertical spacing
+        content.setAlignment(Pos.CENTER);
+        content.setPadding(new Insets(30));  // Reduced padding
+
+        // Title with responsive positioning
+        Text title = createTitle();
+
+        // Button panel with responsive layout
+        VBox buttonPanel = createButtonPanel();
+
+        content.getChildren().addAll(title, new PaddingBox(30, 0), buttonPanel);  // Reduced padding
+        return content;
+    }
+
+    private Text createTitle() {
         Text title = new Text("LATE NIGHT CRUISE");
-        title.setFont(Font.font("Arial", 70));
+        title.setFont(Font.font("Arial", 60));  // Slightly smaller title
         title.setFill(Color.GOLD);
-        title.setEffect(new DropShadow(10, Color.BLACK));
-//        title.setX(200);
-//        title.setY(200);
-        BorderPane.setAlignment(title, Pos.CENTER);
+        title.setEffect(new DropShadow(8, Color.BLACK));  // Smaller shadow
+        return title;
+    }
 
-        VBox top = new VBox();
-        top.setAlignment(Pos.CENTER);
-        top.getChildren().addAll(new PaddingBox(50, 0), title);
+    private VBox createButtonPanel() {
+        VBox buttons = new VBox(15);  // Reduced button spacing
+        buttons.setAlignment(Pos.CENTER);
 
-        VBox buttons = new VBox();
+        CustomButton play = createButton("Play", Color.RED);
+        CustomButton store = createButton("Store", Color.ORANGE);
+        CustomButton settings = createButton("Settings", Color.LIGHTGRAY);
 
-        CustomButton play = new CustomButton("Play", new Font("Arial", 20), 250, 50, Color.RED, Color.WHITE);
-        CustomButton store = new CustomButton("Store", new Font("Arial", 20), 250, 50, Color.rgb(255, 117, 0), Color.WHITE);
-        CustomButton settings = new CustomButton("Settings", new Font("Arial", 20), 250, 50, Color.rgb(228, 228, 228), Color.WHITE);
-
+        // Button actions
         play.setOnAction(event -> {
             LateNightCruise.mainStage.setScene(new GameScene());
             // Stop the global player (It's still playing the home menu music)
@@ -112,42 +117,56 @@ public class MainMenuPane extends BorderPane {
             StorePane.mediaControl.setImage(StorePane.play);
         });
 
-        settings.setOnAction(e->{
-//            LateNightCruise.mainStage.setScene(new ItemShopScene());
+        settings.setOnAction(e -> {
             LateNightCruise.mainStage.setScene(new SettingsScene());
             GlobalPlayer.stopMedia();
         });
 
         buttons.getChildren().addAll(play, store, settings);
+        return buttons;
+    }
 
-        buttons.setSpacing(10);
-        BorderPane.setAlignment(buttons, Pos.CENTER);
-        buttons.setAlignment(Pos.CENTER);
+    private CustomButton createButton(String text, Color color) {
+        CustomButton btn = new CustomButton(
+                text,
+                new Font("Arial", 18),  // Smaller font size
+                160,  // Reduced width
+                40,   // Reduced height
+                color,
+                Color.WHITE
+        );
+        btn.setMaxSize(160, 40);  // Constrain maximum size
+        return btn;
+    }
 
-        // Animations
-        FadeTransition fadeInTitle = new FadeTransition(Duration.seconds(2), title);
+    private void setupAnimations(VBox content, Rectangle glow) {
+        // Title animations
+        Text title = (Text) content.getChildren().get(0);
+
+        FadeTransition fadeInTitle = new FadeTransition(Duration.seconds(1.5), title);
         fadeInTitle.setFromValue(0);
         fadeInTitle.setToValue(1);
-        fadeInTitle.play();
 
-        TranslateTransition slideTitle = new TranslateTransition(Duration.seconds(2), title);
-        slideTitle.setFromY(-100);
+        TranslateTransition slideTitle = new TranslateTransition(Duration.seconds(1.5), title);
+        slideTitle.setFromY(-80);  // Reduced animation distance
         slideTitle.setToY(0);
-        slideTitle.play();
 
-        ScaleTransition expandGlow = new ScaleTransition(Duration.seconds(3), glow);
-        expandGlow.setFromX(0.8);
-        expandGlow.setFromY(0.8);
-        expandGlow.setToX(1);
-        expandGlow.setToY(1);
-        expandGlow.play();
+        // Glow animation
+        Timeline glowPulse = new Timeline(
+                new KeyFrame(Duration.ZERO,
+                        new KeyValue(glow.opacityProperty(), 0.6),
+                        new KeyValue(glow.strokeWidthProperty(), 6)
+                ),
+                new KeyFrame(Duration.seconds(1.5),
+                        new KeyValue(glow.opacityProperty(), 0.2),
+                        new KeyValue(glow.strokeWidthProperty(), 10)
+                )
+        );
+        glowPulse.setCycleCount(Animation.INDEFINITE);
+        glowPulse.setAutoReverse(true);
 
-        this.getChildren().addAll(glow);
-        this.setTop(top);
-        this.setCenter(buttons);
-//        Scene scene = new Scene(root, 1024, 768);
-//        primaryStage.setScene(scene);
-//        primaryStage.setTitle("Retro Night Racer - Intro");
-//        primaryStage.show();
+        // Play animations
+        new ParallelTransition(fadeInTitle, slideTitle).play();
+        glowPulse.play();
     }
 }

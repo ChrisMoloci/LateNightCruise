@@ -27,6 +27,18 @@ public class Playlist implements Serializable {
         System.out.println("Song added: " + song.getSongName());
     }
 
+    public void removeSong(Song song) {
+        this.songs.remove(song);
+    }
+
+    public void removeSongById(String id) {
+        for (Song song : songs) {
+            if (song.getId().equals(id)) {
+                songs.remove(song);
+            }
+        }
+    }
+
     // Gets the entire song array list
     public ArrayList<Song> getSongs() {
         return songs;

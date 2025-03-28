@@ -87,7 +87,7 @@ public class CreatePlaylistView extends BorderPane {
                ObjectOutputStream createPlaylistObject = new ObjectOutputStream(new FileOutputStream("playlist.dat"));
                // Check if another playlist with the same name exists and if it does, append (copy) to the end of its name
                name.setText(checkDuplicates(name.getText()));
-               // Overwrite the old stored playlists with the same playlists plus the new one
+               // Overwrite the old stored playlists with the same playlists
                for (Playlist playlist : playlists) {
                    createPlaylistObject.writeObject(playlist);
                }

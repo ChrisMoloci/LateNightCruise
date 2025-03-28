@@ -4,6 +4,8 @@ import com.gearshifgroove.late_night_cruise.CustomUIElements.CustomButton;
 import com.gearshifgroove.late_night_cruise.CustomUIElements.PaddingBox;
 import com.gearshifgroove.late_night_cruise.GlobalPlayer;
 import com.gearshifgroove.late_night_cruise.LateNightCruise;
+import com.gearshifgroove.late_night_cruise.panes.Store.Data.Playlist;
+import com.gearshifgroove.late_night_cruise.panes.Store.Data.UserLib;
 import com.gearshifgroove.late_night_cruise.scenes.GameScene;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.DB;
 //import com.gearshifgroove.late_night_cruise.CustomUIElements.CustomButton;
@@ -90,8 +92,18 @@ public class MainMenuPane extends BorderPane {
 
         play.setOnAction(event -> {
             LateNightCruise.mainStage.setScene(new GameScene());
+            // Stop the global player (It's still playing the home menu music)
+            GlobalPlayer.player.stop();
 //            GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0002").getMedia());
-            GlobalPlayer.playPlaylist(GlobalPlayer.selectedPlaylist, 0);
+            // Find the store playlist object that is the equivelant to the one stored in selectedPlaylist
+            // This must be done because if a selected playlist is modified after its selected, the selectedPlaylist object
+            // will be outdated, this essentially gets use to up-to-date version in case it was modified
+            for (Playlist playlist : UserLib.getPlaylists()) {
+                if (playlist.getName().equals(GlobalPlayer.selectedPlaylist.getName())) {
+                    GlobalPlayer.selectedPlaylist = playlist;
+                    GlobalPlayer.playPlaylist(GlobalPlayer.selectedPlaylist, 0);
+                }
+            }
         });
 
         store.setOnAction(event -> {

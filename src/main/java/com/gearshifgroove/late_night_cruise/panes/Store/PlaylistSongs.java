@@ -3,6 +3,7 @@ package com.gearshifgroove.late_night_cruise.panes.Store;
 import com.gearshifgroove.late_night_cruise.Const;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Artist;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.DB;
+import com.gearshifgroove.late_night_cruise.panes.Store.Data.Playlist;
 import com.gearshifgroove.late_night_cruise.panes.Store.Data.Song;
 import com.gearshifgroove.late_night_cruise.panes.Store.SubPlaylist.Ownership;
 import javafx.scene.control.ScrollPane;
@@ -14,13 +15,16 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 public class PlaylistSongs extends ScrollPane {
-    public PlaylistSongs(ArrayList<Song> songs) {
+    public PlaylistSongs(Playlist playlist) {
+        ArrayList<Song> songs = playlist.getSongs();
+        this.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+
         VBox content = new VBox();
         content.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
         content.setMinHeight(Const.WINDOW_HEIGHT);
 
         for (Song song : songs) {
-            content.getChildren().add(new SongListing(song, Ownership.checkOwnership(song.getId())));
+            content.getChildren().add(new PlaylistSongListing(song, Ownership.checkOwnership(song.getId()), playlist));
         }
 
         this.setContent(content);

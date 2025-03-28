@@ -114,7 +114,7 @@ public class StorePane extends BorderPane {
         mediaControl.setY(Const.WINDOW_HEIGHT - 45);
         mediaControl.setX(10);
 
-        sideMenuContainer.getChildren().add(mediaControl);
+        sideMenuContainer.getChildren().addAll(mediaControl);
 
         sideMenu.getChildren().addAll(
                 menuAndCoinCount, new PaddingBox(10, 0),

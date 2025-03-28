@@ -58,6 +58,14 @@ public class GlobalPlayer {
         }
     }
 
+//    public static void setSelectedPlaylist(Playlist playlist) {
+//        for (Playlist p : UserLib.getPlaylists()) {
+//            if (p.getName().equals(playlist.getName())) {
+//                selectedPlaylist = p;
+//            }
+//        }
+//    }
+
     public static void changeAudioMuteState(boolean mute) {
         if (mute) {
             muteState = true;

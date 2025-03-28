@@ -28,7 +28,10 @@ public class Playlists extends VBox {
         this.getChildren().add(createPlaylist);
 
         ScrollPane scrollPane = new ScrollPane();
+
         VBox playlists = new VBox();
+        playlists.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+
         createPlaylist.setOnAction(e -> {
             StorePane.displayPane.getChildren().clear();
             StorePane.displayPane.getChildren().add(new CreatePlaylistView());

@@ -10,6 +10,9 @@ import com.gearshifgroove.late_night_cruise.scenes.MainMenuScene;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -18,10 +21,24 @@ import javafx.scene.text.Text;
 
 public class StorePane extends BorderPane {
     public static Text coinCount;
+    public static Image play;
+    public static Image pause;
+    public static ImageView mediaControl;
 
     public static Pane displayPane = new Pane();
+
+    static {
+        play = new Image(StorePane.class.getResourceAsStream("/com/gearshifgroove/late_night_cruise/play.png"), 40, 40, true, true);
+        pause = new Image(StorePane.class.getResourceAsStream("/com/gearshifgroove/late_night_cruise/pause.png"), 40, 40, true, true);
+        mediaControl = new ImageView(play);
+    }
+
     public StorePane() {
         this.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+
+//        play = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/play.png"), 35, 35, true, true);
+//        pause = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/pause.png"), 35, 35, true, true);
+//        mediaControl = new ImageView(play);
 
         // Side menu UI
         VBox sideMenu = new VBox();
@@ -30,6 +47,10 @@ public class StorePane extends BorderPane {
 //        sideMenu.setSpacing(10);
         sideMenu.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 
+        Pane sideMenuContainer = new Pane(sideMenu);
+        sideMenuContainer.setMinWidth(Const.WINDOW_WIDTH/4);
+        sideMenuContainer.setMaxWidth(Const.WINDOW_WIDTH/4);
+
         HBox menuAndCoinCount = new HBox();
         menuAndCoinCount.setMinWidth(sideMenu.getMinWidth());
         menuAndCoinCount.setMaxWidth(sideMenu.getMinWidth());
@@ -37,8 +58,8 @@ public class StorePane extends BorderPane {
         Button back = new Button("Main Menu");
         back.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), CornerRadii.EMPTY, Insets.EMPTY)));
         back.setTextFill(Color.WHITE);
-        back.setMinWidth(sideMenu.getMinWidth() - 40);
-        back.setMaxWidth(sideMenu.getMinWidth() - 40);
+        back.setMinWidth(120);
+        back.setMaxWidth(120);
 
         coinCount = new Text("$" + ScoreSystem.getStoredScore());
 //        coinCount.setFont(Font.font("Arial", 20));
@@ -50,7 +71,8 @@ public class StorePane extends BorderPane {
         store.setFont(Font.font("Arial", FontWeight.BOLD, 30));
         store.setFill(Color.WHITE);
 
-        TextField search = new TextField("Search...");
+        TextField search = new TextField();
+        search.setPromptText("Search...");
         search.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), null, null)));
 
         Button home = new Button("Home");
@@ -89,6 +111,11 @@ public class StorePane extends BorderPane {
         songLibrary.setMinWidth(sideMenu.getMinWidth());
         songLibrary.setMaxWidth(sideMenu.getMinWidth());
 
+        mediaControl.setY(Const.WINDOW_HEIGHT - 45);
+        mediaControl.setX(10);
+
+        sideMenuContainer.getChildren().addAll(mediaControl);
+
         sideMenu.getChildren().addAll(
                 menuAndCoinCount, new PaddingBox(10, 0),
                 store, new PaddingBox(10, 0),
@@ -100,11 +127,27 @@ public class StorePane extends BorderPane {
         displayPane = new Pane(new Home());
 //        displayPane = new Pane(new Playlists());
 
+        mediaControl.setOnMouseClicked(e -> {
+            if (mediaControl.getImage().equals(play)) {
+                GlobalPlayer.player.play();
+                mediaControl.setImage(pause);
+            } else {
+                GlobalPlayer.player.pause();
+                mediaControl.setImage(play);
+            }
+        });
+
         back.setOnAction(event -> {
             GlobalPlayer.stopMedia();
             LateNightCruise.mainStage.setScene(new MainMenuScene());
         });
 
+        search.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.ENTER) {
+                displayPane.getChildren().clear();
+                displayPane.getChildren().add(new SearchResult(search.getText()));
+            }
+        });
 
         home.setOnAction(e -> {
             displayPane.getChildren().clear();
@@ -123,7 +166,7 @@ public class StorePane extends BorderPane {
 
         songs.setOnAction(e -> {
             displayPane.getChildren().clear();
-            displayPane.getChildren().add(new TopSongs());
+            displayPane.getChildren().add(new AllSongs());
         });
 
         playlistsButton.setOnAction(e -> {
@@ -142,7 +185,7 @@ public class StorePane extends BorderPane {
 //        });
 
 //        this.setBackground(new Background(new BackgroundFill(Color.rgb(255, 255, 255), CornerRadii.EMPTY, Insets.EMPTY)));
-        this.setLeft(sideMenu);
+        this.setLeft(sideMenuContainer);
         this.setCenter(displayPane);
 
     }

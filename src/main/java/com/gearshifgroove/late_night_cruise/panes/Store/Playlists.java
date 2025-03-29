@@ -18,46 +18,52 @@ import javafx.scene.text.Text;
 
 import java.io.*;
 
+// Author(s): Christian Moloci
+
+// Show a list of all the playlists
 public class Playlists extends VBox {
     public Playlists() {
+        // A button for creating playlists, styled
         Button createPlaylist = new Button("Create Playlist");
         createPlaylist.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
         createPlaylist.setBackground(new Background(new BackgroundFill(Color.rgb(18, 18, 18), null, null)));
         createPlaylist.setTextFill(Color.WHITE);
-//        this.getItems().add(createPlaylist);
+
+        // Add the create playlist button
         this.getChildren().add(createPlaylist);
 
+        // Scroll pane to store all the PlaylistListing VBox in
         ScrollPane scrollPane = new ScrollPane();
 
+        // A VBox to store all our playlist listings in
         VBox playlists = new VBox();
         playlists.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 
+        // When the button is clicked, go to the CreatePlaylistView which guides the user through creating a new playlist
         createPlaylist.setOnAction(e -> {
             StorePane.displayPane.getChildren().clear();
             StorePane.displayPane.getChildren().add(new CreatePlaylistView());
         });
 
+        // Create a new playlist listing for each of the users' playlists and add it to the playlists VBox
         for (Playlist playlist : UserLib.getPlaylists()) {
-//            this.getItems().add(new PlaylistListing(playlist));
             playlists.getChildren().add(new PlaylistListing(playlist));
         }
 
+        // Set the content of the scroll pane as the playlists VBox, style the ScrollPane and set its sizing
         scrollPane.setContent(playlists);
         scrollPane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
         scrollPane.setMaxHeight(Const.WINDOW_HEIGHT);
         scrollPane.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
         scrollPane.setMinHeight(0);
         this.setMaxWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
+
+        // Add the ScrollPane to the Parent VBox
         this.getChildren().add(scrollPane);
 
+        // Set the dimensions of the parent VBox
         this.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
         this.setMaxWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
         this.setMaxHeight(Const.WINDOW_HEIGHT);
-
-//        this.setSelectionModel(null);
-//        this.setEditable(false);
-////        this.setMouseTransparent(true);
-//        this.setFocusTraversable(false);
-
     }
 }

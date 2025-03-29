@@ -6,8 +6,8 @@ import java.util.ArrayList;
 // Author(s): Christian Moloci
 
 // Playlists are used to play music in the game.
-// They are customizable so the user can choose what music is played.
-// Only owned songs are may be added to a playlist.
+// They are customizable, so the user can choose what music is played.
+// Only owned songs may be added to a playlist.
 public class Playlist implements Serializable {
     // Playlists store an id, a name, and a list of songs which are instantiated in DB
     private int id;

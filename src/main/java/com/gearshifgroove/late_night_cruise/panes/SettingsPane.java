@@ -17,6 +17,8 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.effect.DropShadow;
 
+// Author(s): Christian Moloci
+
 public class SettingsPane extends BorderPane {
     private static final Font BUTTON_FONT = Font.font("Arial", 18);
     private static final int BUTTON_WIDTH = 160;

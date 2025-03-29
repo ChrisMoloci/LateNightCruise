@@ -2,14 +2,20 @@ package com.gearshifgroove.late_night_cruise;
 
 import javafx.scene.image.Image;
 
+// Author(s): Christian Moloci
+
+// Player class for car object that extends tile
 public class Player extends Tile {
+    // contains a gas and coin count var
     private int gasCount;
     private int coinCount;
 
+    // Main constructor that takes in teh necessary values of its super constructor
     public Player(int x, int y, Image image) {
         super(x, y, 0, 0, image);
     }
 
+    // Getter and setter for gas level
     public int getGasCount() {
         return gasCount ;
     }
@@ -18,6 +24,7 @@ public class Player extends Tile {
         this.gasCount = gasCount;
     }
 
+    // Getter and setter for coin count
     public int getCoinCount() {
         return coinCount;
     }

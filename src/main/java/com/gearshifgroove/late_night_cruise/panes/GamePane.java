@@ -34,9 +34,11 @@ import javafx.util.Duration;
 
 import java.io.File;
 
+// Author(s): Christian Moloci
 
-
+// The Game pane is built on a StackPane
 public class GamePane extends StackPane {
+    // Vars
 //    public static AudioClip carMedia;
     private Image terrainImage;
     private Image carImage;
@@ -65,19 +67,25 @@ public class GamePane extends StackPane {
 
     /// Creating gas level
     private double gasLevel = 99.9;
+
+    // Main Constructor
     public GamePane() {
+        // Set the title to Late Night Cruise when playing the game
         LateNightCruise.mainStage.setTitle("Late Night Cruise");
         System.out.println("Game Started");
+        // Set our assets
         terrainImage = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/track.png"));
         carImage = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/car.png"));
         coinImage = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/coin.png"));
         fuelImage = new Image(getClass().getResourceAsStream("/com/gearshifgroove/late_night_cruise/gas-can.png"));
+
+        // Set our tiles with our asset references
         terrainTile1 = new Tile(0, 0, 0, 3, terrainImage);
         terrainTile2 = new Tile(0, 1080, 0, 3, terrainImage);
         car = new Player(883, 490, carImage);
         car.setCoinCount(ScoreSystem.getStoredScore());
 
-        // Car sound
+        // Car sound (Not used, buggy)
 //        carMedia = new AudioClip(new File("src/main/resources/com/gearshifgroove/late_night_cruise/carSound.wav").toURI().toString());
 //        carMedia.setCycleCount(AudioClip.INDEFINITE);
 //        carMedia.setVolume(0.1);
@@ -91,11 +99,14 @@ public class GamePane extends StackPane {
 
         this.getChildren().add(button);
 
+        // Create a canvas with a 1080p resolution
         Canvas canvas = new Canvas(1920, 1080);
-         gc = canvas.getGraphicsContext2D();
+        gc = canvas.getGraphicsContext2D();
         canvas.requestFocus();
 
+        // Get keyboard input and do the respective tasks
         this.setOnKeyPressed(event -> {
+            // Pauses the game
             if (event.getCode() == KeyCode.BACK_SPACE){
                 hitPause();
             }
@@ -104,10 +115,7 @@ public class GamePane extends StackPane {
                 // If the game is paused, ignore other key event
                 return;
             }
-
-//            System.out.println(event.getCode());
-//            System.out.println("Key pressed");
-
+            // For contorting player left and right, just sets values for now
             switch (event.getCode()) {
 //                case W:
 //                    System.out.println("up");
@@ -126,29 +134,12 @@ public class GamePane extends StackPane {
             }
         });
 
-//        this.setOnKeyReleased(event -> {
-//            switch (event.getCode()) {
-//                case W:
-//                    System.out.println("up release");
-//                    break;
-//                case A:
-//                    System.out.println("left release");
-//                    direction = 'N';
-//                    break;
-//                case S:
-//                    System.out.println("down release");
-//                    break;
-//                case D:
-//                    System.out.println("right release");
-//                    direction = 'N';
-//                    break;
-//            }
-//        });
-
+        // Create a timeline and set the frame rate to 60fps, set it to repeat indefinitely and play it
         timeline = new Timeline(new KeyFrame(Duration.millis(16), event -> update(gc)));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
+        // Add canvas to the parent stack pane
         this.getChildren().add(canvas);
     }
 
@@ -168,24 +159,28 @@ public class GamePane extends StackPane {
             return;
         }
 
-        int key = rand.nextInt(100);
+//        int key = rand.nextInt(100);
+//
+//        if (key == 0) {
+//            key = rand.nextInt(0, 2);
+//            if (key == 0) {
+//                System.out.println("Coin");
+//            } else if (key == 1) {
+//                System.out.println("Fuel");
+//            } else {
+//                System.out.println("Unknown generator");
+//            }
+//
+//        }
 
-        if (key == 0) {
-            key = rand.nextInt(0, 2);
-            if (key == 0) {
-                System.out.println("Coin");
-            } else if (key == 1) {
-                System.out.println("Fuel");
-            } else {
-                System.out.println("Unknown generator");
-            }
-
-        }
-
+        // Clear the screen to redraw everything after
         gc.clearRect(0, 0, Const.WINDOW_WIDTH, Const.WINDOW_HEIGHT);
+
+        // Shift the terrain locations
         terrainTile1.setyCoord(terrainTile1.getyCoord() + terrainTile1.getyCordSpeed());
         terrainTile2.setyCoord(terrainTile2.getyCoord() + terrainTile2.getyCordSpeed());
 
+        // If the direction value changes, move the player in the respective direction and reset the direction back to N
         if (direction != 'N') {
             if (direction == 'L') {
                 car.moveLeft();
@@ -196,8 +191,10 @@ public class GamePane extends StackPane {
             direction = 'N';
         }
 
+        // Set the cars new x coord (if they changed that is)
         car.setxCoord(car.getxCoord() + car.getxCordSpeed());
 
+        // If a tile goes off the screen, move it to the top of the screen
         if (terrainTile1.getyCoord() > 1080) {
             terrainTile1.setyCoord(-1080);
         }
@@ -205,14 +202,13 @@ public class GamePane extends StackPane {
             terrainTile2.setyCoord(-1080);
         }
 
-//        this.setOnKeyPressed(event -> {
-//            System.out.println(event.getCode());
-//        });
-
+        // Draw the terrain tiles
         gc.drawImage(terrainTile1.getImage(), terrainTile1.getxCoord(), terrainTile1.getyCoord());
         gc.drawImage(terrainTile2.getImage(), terrainTile2.getxCoord(), terrainTile2.getyCoord());
 
+        // Draw the car tile
         gc.drawImage(car.getImage(), car.getxCoord(), car.getyCoord());
+
         /// Coin & Fuel
         /// Random number 1 and 1000
         int randNum = rand.nextInt(1000) +1;
@@ -273,12 +269,11 @@ public class GamePane extends StackPane {
 
             }
             gc.drawImage(fuel.getImage(),fuel.getxCoord(), fuel.getyCoord());
-
         }
 
         if (gasLevel >0){
             gasLevel -=0.03;
-        }else{
+        } else{
             gasLevel =0;
             isGameOver = true;
         }
@@ -290,7 +285,6 @@ public class GamePane extends StackPane {
             System.out.println("Game Over!");
         }
         drawScoreBox(gc,roundedGasLevel);
-
     }
 
 
@@ -331,7 +325,6 @@ public class GamePane extends StackPane {
         }
     }
 
-
     private void showGameOverScreen(GraphicsContext gc) {
         if (gameOverText == null) {
             gameOverText = new Text("Game Over!");
@@ -360,9 +353,6 @@ public class GamePane extends StackPane {
 //            playAgainButton.setFont(Font.font("Arial", FontWeight.BOLD,20));
             buttonsLayout.getChildren().add(playAgainButton);
 
-
-
-
             // Main Menu Button
 //            Button mainMenuButton = new Button("Main Menu");
             Button mainMenuButton = new CustomButton("Main Menu", Font.font("Arial", FontWeight.BOLD, 20), 150, 60, Color.rgb(250, 250, 250), Color.BLACK);
@@ -373,13 +363,8 @@ public class GamePane extends StackPane {
             buttonsLayout.getChildren().add(mainMenuButton);
 
             this.getChildren().add(buttonsLayout);
-
-
         }
-
     }
-
-
 
     private void resetGame() {
         // Reset all game variables

@@ -9,6 +9,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+// Not used
 public class ItemShopPane extends BorderPane {
 
     public static Pane displayPane = new Pane();

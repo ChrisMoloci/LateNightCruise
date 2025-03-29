@@ -18,9 +18,14 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+// Author(s): Christian Moloci
+
 public class CreditsPane extends BorderPane {
     public CreditsPane() {
+        // Set the title of the app to display Credits
         LateNightCruise.mainStage.setTitle("Credits");
+
+        // Style the Background
         this.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 
         // VBox to store all credits and give the scrolling effect to
@@ -119,7 +124,6 @@ public class CreditsPane extends BorderPane {
                 musicalBackendDevelopers, musicStoreDevelopers, assetSources,
                 music);
         allCredits.setAlignment(Pos.CENTER);
-//        allCredits.setBackground(new Background(new BackgroundFill(Color.rgb(0, 0, 0, 0.3), null, null)));
         BorderPane.setAlignment(allCredits, Pos.CENTER);
         BorderPane.setAlignment(groupName, Pos.TOP_RIGHT);
 
@@ -127,6 +131,7 @@ public class CreditsPane extends BorderPane {
         this.setCenter(allCredits);
         this.setTop(groupName);
 
+        // Fade the BorderPane in
         FadeTransition intro = new FadeTransition(Duration.millis(1000), this);
         intro.setFromValue(0);
         intro.setToValue(1);

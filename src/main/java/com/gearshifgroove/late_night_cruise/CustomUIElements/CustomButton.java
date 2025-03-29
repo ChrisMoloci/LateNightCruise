@@ -8,10 +8,16 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+// Author(s): Christian Moloci
+
+// Create a custom button node used in some of the menus
 public class CustomButton extends Button {
+    // Set a base color
     private Color baseColor;
 
+    // Get value for super constructor and also values for custom button
     public CustomButton(String text, Font font, int width, int height, Color color, Color textColor) {
+        // Run the super constructor
         super(text);
         this.baseColor = color;
 
@@ -25,10 +31,11 @@ public class CustomButton extends Button {
                 Insets.EMPTY
         )));
 
-        // Hover effects
-
+        // Unused hover effect
+        this.setupHoverEffects();
     }
 
+    // Sets the base color of the button
     public void setBaseColor(Color newColor) {
         this.baseColor = newColor;
         setBackground(new Background(new BackgroundFill(
@@ -38,9 +45,10 @@ public class CustomButton extends Button {
         )));
     }
 
+    // When the button is hovered on, change the style a bit
     private void setupHoverEffects() {
         setOnMouseEntered(e -> setBackground(new Background(
-                new BackgroundFill(baseColor.deriveColor(0, 1, 1.2, 1),
+                new BackgroundFill(baseColor.deriveColor(5, 5, 5, .9),
                         new CornerRadii(16),
                         Insets.EMPTY)
         )));

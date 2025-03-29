@@ -10,17 +10,21 @@ import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
-public class GenrePage extends ScrollPane {
-    public GenrePage(ArrayList<Song> songs) {
-//        for (Song song : songs) {
-//            System.out.println(song.getSongName());
-//        }
+// Author(s): Christian Moloci
 
+// Displays all the songs in the genre using SongListing nodes
+public class GenrePage extends ScrollPane {
+    // Takes in a list of filtered songs
+    public GenrePage(ArrayList<Song> songs) {
+        // A VBox to store the song listing nodes
         VBox genreSongsBox = new VBox();
 
+        // Get the owned songs
         ArrayList<String> ownedSongs = Ownership.getOwnedSongs();
 
+        // Display nodes with either the ability to purchase a song or add to a playlist based on ownership value
         for (Song song : songs) {
+            // Check it a song is owned
             boolean songOwned = false;
             for (String ownedSong : ownedSongs) {
                 if (song.getId().equals(ownedSong)) {
@@ -28,16 +32,15 @@ public class GenrePage extends ScrollPane {
                     break;
                 }
             }
-            if (songOwned) {
-                genreSongsBox.getChildren().add(new SongListing(song, true));
-            } else {
-                genreSongsBox.getChildren().add(new SongListing(song, false));
-            }
+            // Create a song listing either as purchasable or playlist addable based on songOwned value
+            genreSongsBox.getChildren().add(new SongListing(song, songOwned));
         }
 
+        // Set the content of the scrollpane to the genresPane VBox
         this.setContent(genreSongsBox);
+
+        // Set all the dimensions
         this.setMaxSize(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4, Const.WINDOW_HEIGHT);
-//        this.setMinSize(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4, Const.WINDOW_HEIGHT);
         this.setMinWidth(Const.WINDOW_WIDTH - Const.WINDOW_WIDTH / 4);
     }
 }

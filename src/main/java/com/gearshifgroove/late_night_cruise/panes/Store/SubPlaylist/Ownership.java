@@ -51,7 +51,7 @@ public class Ownership {
 
     public static boolean checkOwnership(String song) {
         boolean status = false;
-        for (String songToCheck : ownedSongs) {
+        for (String songToCheck : getOwnedSongs()) {
             if (song.equals(songToCheck)) {
                 status = true;
                 break;

@@ -30,6 +30,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+// Author(s): Christian Moloci
+
 public class MainMenuPane extends StackPane {
     public MainMenuPane() {
         LateNightCruise.mainStage.setTitle("Main Menu");
@@ -91,7 +96,7 @@ public class MainMenuPane extends StackPane {
         VBox buttons = new VBox(15);  // Reduced button spacing
         buttons.setAlignment(Pos.CENTER);
 
-        CustomButton play = createButton("Play", Color.RED);
+        CustomButton play = createButton("Play", Color.rgb(0, 112, 40));
         CustomButton store = createButton("Store", Color.ORANGE);
         CustomButton settings = createButton("Settings", Color.LIGHTGRAY);
         settings.setTextFill(Color.BLACK);
@@ -103,16 +108,8 @@ public class MainMenuPane extends StackPane {
             LateNightCruise.mainStage.setFullScreenExitHint(null);
             // Stop the global player (It's still playing the home menu music)
             GlobalPlayer.player.stop();
-//            GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0002").getMedia());
-            // Find the store playlist object that is the equivelant to the one stored in selectedPlaylist
-            // This must be done because if a selected playlist is modified after its selected, the selectedPlaylist object
-            // will be outdated, this essentially gets use to up-to-date version in case it was modified
-            for (Playlist playlist : UserLib.getPlaylists()) {
-                if (playlist.getName().equals(GlobalPlayer.selectedPlaylist.getName())) {
-                    GlobalPlayer.selectedPlaylist = playlist;
-                    GlobalPlayer.playPlaylist(GlobalPlayer.selectedPlaylist, 0);
-                }
-            }
+            // Init the music for the game
+            GlobalPlayer.gameMusicInit();
         });
 
         store.setOnAction(event -> {

@@ -34,7 +34,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 
-// Author(s): Christian Moloci
+// Author(s): Christian Moloci, Ebrahim JabirOmer
 
 // The Game pane is built on a StackPane
 public class GamePane extends StackPane {
@@ -143,7 +143,7 @@ public class GamePane extends StackPane {
         this.getChildren().add(canvas);
     }
 
-    /// This will generate a random lane for the coin or fuel
+    //Generate a random lane for spawning coins or fuel
     private int getRandomLane(){
         /// Possible lanes
 //        int[] lanes = {800,900,982,1068};
@@ -153,7 +153,9 @@ public class GamePane extends StackPane {
         //return rand.nextInt(maxX-minX + 1) + minX;
     }
 
+    // The update method runs every frame to update the game state and redraw the screen
     public void update(GraphicsContext gc) {
+        // If the game is over, show the game over screen and stop updating
         if (isGameOver){
             showGameOverScreen(gc);
             return;
@@ -194,7 +196,7 @@ public class GamePane extends StackPane {
         // Set the cars new x coord (if they changed that is)
         car.setxCoord(car.getxCoord() + car.getxCordSpeed());
 
-        // If a tile goes off the screen, move it to the top of the screen
+        // Reset terrain tile position if it moves off-screen
         if (terrainTile1.getyCoord() > 1080) {
             terrainTile1.setyCoord(-1080);
         }
@@ -206,7 +208,7 @@ public class GamePane extends StackPane {
         gc.drawImage(terrainTile1.getImage(), terrainTile1.getxCoord(), terrainTile1.getyCoord());
         gc.drawImage(terrainTile2.getImage(), terrainTile2.getxCoord(), terrainTile2.getyCoord());
 
-        // Draw the car tile
+        // Draw the car on the screen
         gc.drawImage(car.getImage(), car.getxCoord(), car.getyCoord());
 
         /// Coin & Fuel
@@ -215,7 +217,6 @@ public class GamePane extends StackPane {
         /// Random number between 1 and 2
         int spawnType = rand.nextInt(2)+1;
 
-            /// If both numbers match spawn a coin or fuel
         if (randNum >= 995){
             int randomLane = getRandomLane();
             if (spawnType==1){
@@ -228,86 +229,102 @@ public class GamePane extends StackPane {
             }
         }
 
+        // Update and draw all coins
         for(int i=0; i<coins.size(); i++){
             Coin coin = coins.get(i);
             /// Moving it downwards by 2 pixels per frame
             coin.setyCoord(coin.getyCoord()+2);
-
             /// Check if the coin has moved off the screen, if y is greater than 1080, which is the bottom
             if (coin.getyCoord()>1080){
+                // Remove the coin if it moves off-screen
                 coins.remove(i);
         }
 
+            // Check for collision with the car and update the score
             if (Math.abs(car.getxCoord() - coin.getxCoord())<30 && Math.abs(car.getyCoord()-coin.getyCoord())<30){
                 ScoreSystem.updateStoredScore(ScoreSystem.getStoredScore() + 1);
                 car.setCoinCount(ScoreSystem.getStoredScore());
 //                car.setCoinCount(car.getCoinCount()+1);
+                // Remove the collected coin
                 coins.remove(i);
                 //i--;
             }
-
+            //Draw the coin
             gc.drawImage(coin.getImage(),coin.getxCoord(),coin.getyCoord());
         }
 
+        // Update and draw all fuels
         for (int i=0; i<fuels.size(); i++){
             Fuel fuel = fuels.get(i);
+            // Move the fuel down the screen
             fuel.setyCoord(fuel.getyCoord() + 2);
 
             /// Check if the fuel reaches bottom or collected
             if (fuel.getyCoord()>1080){
+                // Remove the fuel if it moves off-screen
                 fuels.remove(i);
             }
 
+            // Check for collision with the car and refill gas
             if (Math.abs(car.getxCoord() - fuel.getxCoord())<30 && Math.abs(car.getyCoord() - fuel.getyCoord())<30){
                 car.setGasCount(car.getGasCount()+1);
                 gasLevel += 5;
                 if (gasLevel > 100){
+                    ///Keeps the gas level at 100
                     gasLevel =100;
                 }
+                // Remove the collected fuel
                 fuels.remove(i);
                 //i--;
 
             }
+            // Draw the fuel
             gc.drawImage(fuel.getImage(),fuel.getxCoord(), fuel.getyCoord());
         }
 
+        // Decrease the gas level over time
         if (gasLevel >0){
+            // Gas decreases by 0.03 per frame
             gasLevel -=0.03;
         } else{
             gasLevel =0;
+            // If the gas is empty, game over
             isGameOver = true;
         }
 
-        /// Round the gas level
+        // Round and display the gas level on the screen
         int roundedGasLevel = (int) Math.floor(gasLevel);
         if (gasLevel <= 0){
             gasLevel =0;
             System.out.println("Game Over!");
         }
+        // Draw the score and gas level
         drawScoreBox(gc,roundedGasLevel);
     }
 
 
-
+    //Method to pause or resume the game
     private void hitPause(){
+        // Toggle the pause state
         isPaused = !isPaused;
 
         if (isPaused){
+            // Resume the game if it was paused
             timeline.pause();
-
+            // If pause menu hasn't been created
             if (buttonsLayout == null){
                 buttonsLayout = new VBox(10);
                 buttonsLayout.setAlignment(Pos.CENTER);
                 buttonsLayout.setSpacing(20);
 
-//                unpauseButton = new Button("Unpause");
+                // Create the "Resume" button
                 unpauseButton = new CustomButton("Resume", Font.font("Arial", FontWeight.BOLD, 20), 150, 60, Color.rgb(0, 112, 40), Color.WHITE);
                 unpauseButton.setOnAction(e->hitPause());
 //                unpauseButton.setFont(Font.font("Arial", FontWeight.BOLD,20));
 //                unpauseButton.setTextFill(Color.WHITE);
                 buttonsLayout.getChildren().add(unpauseButton);
 
-//                mainMenuButton = new Button("Main Menu");
+                // Create the "Main Menu" button
                 mainMenuButton = new CustomButton("Main Menu", Font.font("Arial", FontWeight.BOLD, 20), 150, 60, Color.rgb(250, 250, 250), Color.BLACK);
                 mainMenuButton.setOnAction(e->goToMainMenu());
 //                mainMenuButton.setFont(Font.font("Arial",FontWeight.BOLD,20));
@@ -317,15 +334,19 @@ public class GamePane extends StackPane {
                 this.getChildren().add(buttonsLayout);
             }
         }else{
+            // Resume the game updates
             timeline.play();
-            if (buttonsLayout != null){
+            if (buttonsLayout != null){// If pause menu exists
+                // Remove pause menu
                 this.getChildren().remove(buttonsLayout);
+                // Reset layout reference
                 buttonsLayout = null;
             }
         }
     }
-
+    // Method to display the "Game Over" screen
     private void showGameOverScreen(GraphicsContext gc) {
+        // If game over text is not already created
         if (gameOverText == null) {
             gameOverText = new Text("Game Over!");
             gameOverText.setFont(Font.font(60));
@@ -342,8 +363,7 @@ public class GamePane extends StackPane {
             buttonsLayout.setAlignment(Pos.CENTER);
             buttonsLayout.setSpacing(20);
 
-            // Play Again Button
-//            Button playAgainButton = new Button("Play Again");
+            // Create "Play Again" button
             Button playAgainButton = new CustomButton("Play Again", Font.font("Arial", FontWeight.BOLD, 20), 150, 60, Color.rgb(0, 112, 40), Color.WHITE);
             playAgainButton.setOnAction(e -> {
                 resetGame();
@@ -353,23 +373,19 @@ public class GamePane extends StackPane {
 //            playAgainButton.setFont(Font.font("Arial", FontWeight.BOLD,20));
             buttonsLayout.getChildren().add(playAgainButton);
 
-            // Main Menu Button
-//            Button mainMenuButton = new Button("Main Menu");
+            // Create "Main Menu" button
             Button mainMenuButton = new CustomButton("Main Menu", Font.font("Arial", FontWeight.BOLD, 20), 150, 60, Color.rgb(250, 250, 250), Color.BLACK);
-            mainMenuButton.setOnAction(e -> goToMainMenu());
-//            mainMenuButton.setFont(Font.font(60));
-//            mainMenuButton.setFont(Font.font("Arial",FontWeight.BOLD,20));
-//            mainMenuButton.setTextFill(Color.WHITE);
+              mainMenuButton.setOnAction(e -> goToMainMenu());
             buttonsLayout.getChildren().add(mainMenuButton);
 
             this.getChildren().add(buttonsLayout);
         }
     }
 
+    // Method to reset the game state
     private void resetGame() {
         // Reset all game variables
         gasLevel = 100.0;
-//        car.setCoinCount(ScoreSystem.getStoredScore());
         car.setGasCount(0);
         coins.clear();
         fuels.clear();
@@ -384,34 +400,38 @@ public class GamePane extends StackPane {
           this.getChildren().remove(buttonsLayout);
           buttonsLayout = null;
       }
-
+        // Mark game as not over
         isGameOver = false;
         System.out.println("Game has been reset");
     }
-
+    // Method to go back to the main menu
     private void goToMainMenu(){
-        /// Replace with actual main menu scene
+        // Switch scene to main menu
         LateNightCruise.mainStage.setScene(new MainMenuScene());
     }
-
+    // Method to draw the score box on screen
     private void drawScoreBox(GraphicsContext gc, double roundedGasLevel){
         double boxWidth = 150;
         double boxHeight = 84;
 
+        // Position X coordinate
         double boxX = Const.WINDOW_WIDTH - boxWidth + 800;
         double boxY = 100;
 
+        // Set box background color
         gc.setFill(Color.BLACK);
+        // Draw the score box
         gc.fillRect(boxX, boxY, boxWidth, boxHeight);
 
         gc.setFill(Color.WHITE);
 
         gc.setFont(Font.font("Arial",FontWeight.BOLD,14));
-
+         // Display coin count
         gc.fillText("Coin: "+ car.getCoinCount(),boxX + 10, boxY + 30);
         //gc.fillText("Gas: " + car.getGasCount(), boxX + 10, boxY + 50);
 
 //        String formattedGasLevel = String.format("%.2f", roundedGasLevel);
+        // Display gas level
         gc.fillText("gas Level:" + Math.round(roundedGasLevel), boxX + 10, boxY + 60);
     }
 }

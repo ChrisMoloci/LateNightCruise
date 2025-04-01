@@ -18,7 +18,7 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-// Author(s): Christian Moloci
+// Author(s): Christian Moloci, Tito Migabo
 
 public class CreditsPane extends BorderPane {
     public CreditsPane() {

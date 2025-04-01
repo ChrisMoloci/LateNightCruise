@@ -33,12 +33,12 @@ import javafx.util.Duration;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-// Author(s): Christian Moloci
+// Author(s): Christian Moloci, Tito Migabo
 
 public class MainMenuPane extends StackPane {
     public MainMenuPane() {
         LateNightCruise.mainStage.setTitle("Main Menu");
-        GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0001").getMedia());
+        GlobalPlayer.changeSong(DB.getArtists().get("0001").getSong("0001").getMedia()); //// Initialize background music
 
         // Setup responsive background
         setStyle("-fx-background-color: linear-gradient(to bottom, #ff00ff, #0000ff, #001f3f);");
@@ -55,6 +55,7 @@ public class MainMenuPane extends StackPane {
         getChildren().addAll(glow, mainContent);
     }
 
+    // Creates the cyan glowing border effect
     private Rectangle createGlowEffect() {
         Rectangle glow = new Rectangle();
         glow.setFill(Color.TRANSPARENT);
@@ -69,6 +70,7 @@ public class MainMenuPane extends StackPane {
         return glow;
     }
 
+    // Creating the main content container
     private VBox createMainContent() {
         VBox content = new VBox(30);  // Reduced vertical spacing
         content.setAlignment(Pos.CENTER);
@@ -84,6 +86,7 @@ public class MainMenuPane extends StackPane {
         return content;
     }
 
+    // Creating main title text
     private Text createTitle() {
         Text title = new Text("LATE NIGHT CRUISE");
         title.setFont(Font.font("Arial", 60));  // Slightly smaller title
@@ -92,10 +95,12 @@ public class MainMenuPane extends StackPane {
         return title;
     }
 
+    // Creating the container with actions
     private VBox createButtonPanel() {
         VBox buttons = new VBox(15);  // Reduced button spacing
         buttons.setAlignment(Pos.CENTER);
 
+        //Creating menu buttons
         CustomButton play = createButton("Play", Color.rgb(0, 112, 40));
         CustomButton store = createButton("Store", Color.ORANGE);
         CustomButton settings = createButton("Settings", Color.LIGHTGRAY);
@@ -112,12 +117,14 @@ public class MainMenuPane extends StackPane {
             GlobalPlayer.gameMusicInit();
         });
 
+        //Store button action that open store
         store.setOnAction(event -> {
             LateNightCruise.mainStage.setScene(new StoreScene());
             GlobalPlayer.stopMedia();
             StorePane.mediaControl.setImage(StorePane.play);
         });
 
+        //Setting button action that opens settings
         settings.setOnAction(e -> {
             LateNightCruise.mainStage.setScene(new SettingsScene());
             GlobalPlayer.stopMedia();
@@ -127,6 +134,7 @@ public class MainMenuPane extends StackPane {
         return buttons;
     }
 
+    //Method to create styled buttons
     private CustomButton createButton(String text, Color color) {
         CustomButton btn = new CustomButton(
                 text,
@@ -140,14 +148,17 @@ public class MainMenuPane extends StackPane {
         return btn;
     }
 
+    //Sets up entrance animations
     private void setupAnimations(VBox content, Rectangle glow) {
         // Title animations
         Text title = (Text) content.getChildren().get(0);
 
+        //Fade-in animation
         FadeTransition fadeInTitle = new FadeTransition(Duration.seconds(1.5), title);
         fadeInTitle.setFromValue(0);
         fadeInTitle.setToValue(1);
 
+        //slide-up animation
         TranslateTransition slideTitle = new TranslateTransition(Duration.seconds(1.5), title);
         slideTitle.setFromY(-80);  // Reduced animation distance
         slideTitle.setToY(0);

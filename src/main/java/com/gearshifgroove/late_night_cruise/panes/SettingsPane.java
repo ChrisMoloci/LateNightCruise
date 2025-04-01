@@ -17,28 +17,32 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.effect.DropShadow;
 
-// Author(s): Christian Moloci
+// Author(s): Christian Moloci, Tito Migabo
 
 public class SettingsPane extends BorderPane {
+    //Style constants for buttons
     private static final Font BUTTON_FONT = Font.font("Arial", 18);
     private static final int BUTTON_WIDTH = 160;
     private static final int BUTTON_HEIGHT = 40;
 
+    // UI components
     private CustomButton muteButton;
     private CustomButton backButton;
     private CustomButton creditsButton;
 
     public SettingsPane() {
         LateNightCruise.mainStage.setTitle("Settings");
-        setupBackground();
-        setupUI();
-        setupActions();
+        setupBackground(); //setting background to gradient
+        setupUI(); //interface elements
+        setupActions(); // button behaviors
     }
 
+    //Applying gradient background
     private void setupBackground() {
         this.setStyle("-fx-background-color: linear-gradient(to bottom, #ff00ff, #0000ff, #001f3f);");
     }
 
+    //Main interface layout
     private void setupUI() {
         VBox mainContainer = new VBox(20);
         mainContainer.setAlignment(Pos.CENTER);
@@ -78,23 +82,28 @@ public class SettingsPane extends BorderPane {
                 Color.WHITE
         );
 
+        //Adds components to layout
         buttonBox.getChildren().addAll(backButton, muteButton, creditsButton);
         mainContainer.getChildren().addAll(title, buttonBox);
         this.setCenter(mainContainer);
     }
 
+    //Configuring button click
     private void setupActions() {
-        backButton.setOnAction(e ->
+        backButton.setOnAction(e ->//returning to main menu
                 LateNightCruise.mainStage.setScene(new MainMenuScene()));
 
+        //audio mute state
         muteButton.setOnAction(e -> {
             boolean newMuteState = !GlobalPlayer.getAudioMuteState();
             GlobalPlayer.changeAudioMuteState(newMuteState);
 
+            //Updated button text and color
             muteButton.setText(newMuteState ? "Unmute" : "Mute");
             muteButton.setBaseColor(newMuteState ? Color.ORANGE : Color.RED);
         });
 
+        //Showing the credit screen
         creditsButton.setOnAction(e -> {
             LateNightCruise.mainStage.setScene(new CreditScene());
             LateNightCruise.mainStage.setFullScreen(true);

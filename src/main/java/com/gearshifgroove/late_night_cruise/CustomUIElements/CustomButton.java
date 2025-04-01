@@ -8,7 +8,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-// Author(s): Christian Moloci
+// Author(s): Christian Moloci, Tito Migabo
 
 // Create a custom button node used in some of the menus
 public class CustomButton extends Button {
@@ -53,6 +53,7 @@ public class CustomButton extends Button {
                         Insets.EMPTY)
         )));
 
+        // Restore original color when th mouse leaves
         setOnMouseExited(e -> setBackground(new Background(
                 new BackgroundFill(baseColor,
                         new CornerRadii(16),
